@@ -12,8 +12,8 @@ This repository contains the frontend and backend components for the Unihack 202
 ## Prerequisites
 
 - Docker and Docker Compose
-- Node.js 18+ (for local development)
-- Go 1.21+ (for local development)
+- Node.js 18+ (for local development, if not using docker)
+- Go 1.21+ (for local development, if not using docker)
 
 ## Quick Start with Docker
 
@@ -26,6 +26,13 @@ This repository contains the frontend and backend components for the Unihack 202
 2. Start the application:
    ```bash
    docker-compose up
+   ```
+   
+   If you're experiencing issues with the frontend host binding, you can also use:
+   ```bash
+   # Alternative startup for network binding issues
+   docker-compose up backend
+   docker-compose run --service-ports frontend
    ```
 
 3. Access the application:
