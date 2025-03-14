@@ -17,6 +17,8 @@ services:
       - NEXT_PUBLIC_API_URL=http://localhost:8080
       - HOST=0.0.0.0
       - NEXT_TELEMETRY_DISABLED=1
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
     command: npm run dev
     depends_on:
       - backend
