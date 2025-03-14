@@ -12,8 +12,6 @@ This repository contains the frontend and backend components for the Unihack 202
 ## Prerequisites
 
 - Docker and Docker Compose
-- Node.js 18+ (for local development, if not using docker)
-- Go 1.21+ (for local development, if not using docker)
 
 ## Quick Start with Docker
 
@@ -27,57 +25,15 @@ This repository contains the frontend and backend components for the Unihack 202
    ```bash
    docker-compose up
    ```
-   
-   If you're experiencing issues with the frontend host binding, you can also use:
-   ```bash
-   # Alternative startup for network binding issues
-   docker-compose up backend
-   docker-compose run --service-ports frontend
-   ```
 
 3. Access the application:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8080
 
-## Local Development
+## Environment files
+Environment files for backend and frontend can be put into `backend.env` and `frontend.env` respectively. The skeleton for the environment files should be provided in `backend.env.sample`.
 
-### Backend
-
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-
-2. Install dependencies:
-   ```bash
-   go mod download
-   ```
-
-3. Run the server:
-   ```bash
-   go run main.go
-   ```
-
-The backend server will start at http://localhost:8080
-
-### Frontend
-
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-The frontend application will be available at http://localhost:3000
+**(IMPORTANT)** The frontend should use NEXT_PUBLIC_API_URL for accessing the API (done in the Dockerfile)
 
 ## API Endpoints
 
