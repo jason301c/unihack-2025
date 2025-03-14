@@ -21,7 +21,9 @@ This repository contains the frontend and backend components for the Unihack 202
    cd unihack-2025
    ```
 
-2. Start the application:
+2. Create .env files in the root directory: `frontend.env` and `backend.env` containing the respective environment variables
+
+3. Start the application:
    ```bash
    docker-compose up
    ```
