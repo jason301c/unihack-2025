@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"unihack-2025/backend/db"
+	"unihack-2025/backend/fetcher"
 	"unihack-2025/backend/googlescrape"
 
 	"github.com/gin-gonic/gin"
@@ -42,6 +43,9 @@ func main() {
 
 	// Search endpoint
 	r.GET("/search", googlescrape.HandleSearch)
+
+	// Fetch random clothes endpoint
+	r.GET("/fetch", fetcher.HandleFetch)
 
 	r.Run(":8080")
 }
