@@ -8,11 +8,11 @@ interface ItemsSectionProps {
   images: QueryResult['images'],
 }
 
-// Remember to add brand name late
+// Remember to add brand name later
 export function ItemsSection({ query, images }: ItemsSectionProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-medium">{query}</h3>
+    <div className="space-y-2">
+      <h3 className="text-xl font-medium text-gray-200">{query}</h3>
       <div className="grid grid-cols-3 gap-2">
         {images.map((image, idx) => (
           <div 
