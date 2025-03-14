@@ -95,7 +95,9 @@ func FetchRandomClothes() ([]QueryResult, error) {
 		images := make([]string, 0, imageCount)
 		for i := 0; i < imageCount; i++ {
 			if link, ok := documents[i]["link"].(string); ok {
-				images = append(images, link)
+				// Find brands of the image
+				brand := FindBrand(link)
+				images = append(images, link, brand)
 			}
 		}
 
