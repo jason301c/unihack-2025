@@ -18,8 +18,12 @@ import (
 
 // QueryResult represents a query and its associated images
 type QueryResult struct {
-	Query  string   `json:"query"`
-	Images []string `json:"images"`
+	Query  string      `json:"query"`
+	Images []ImageInfo `json:"images"`
+}
+type ImageInfo struct {
+	Link  string `json:"link"`
+	Brand string `json:"brand"`
 }
 
 // FetchRandomClothes fetches random clothing images from the database
@@ -91,13 +95,15 @@ func FetchRandomClothes() ([]QueryResult, error) {
 			imageCount = len(documents)
 		}
 
-		// Extract image links
-		images := make([]string, 0, imageCount)
+		images := make([]ImageInfo, 0, imageCount)
 		for i := 0; i < imageCount; i++ {
 			if link, ok := documents[i]["link"].(string); ok {
 				// Find brands of the image
 				brand := FindBrand(link)
-				images = append(images, link, brand)
+				images = append(images, ImageInfo{
+					Link:  link,
+					Brand: brand,
+				})
 			}
 		}
 
