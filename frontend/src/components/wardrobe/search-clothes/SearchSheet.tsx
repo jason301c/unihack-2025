@@ -51,7 +51,7 @@ export default function SearchSheet({
       >
         <SheetHeader>
           <SheetTitle className="text-xl text-center text-prim-darkest">
-            Find more clothes!
+            Catalogue
           </SheetTitle>
         </SheetHeader>
 

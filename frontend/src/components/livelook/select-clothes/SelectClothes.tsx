@@ -343,16 +343,18 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
       )}
 
       {/* Main Content */}
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative h-[85vh]">
         {/* Base mannequin */}
-        <Image
-          src={ILLUSTRATIONS.mannequin}
-          alt="Mannequin"
-          width={500}
-          height={800}
-          className="w-full h-full object-fill object-top"
-          priority
-        />
+        <div className="w-full flex justify-center items-center pt-8">
+          <Image
+            src={ILLUSTRATIONS.mannequin}
+            alt="Mannequin"
+            width={1200}
+            height={3000}
+            className="h-[95vh] w-auto object-contain"
+            priority
+          />
+        </div>
         
         {/* Render bottom first (lower layer) */}
         {renderClothingItem(bottomClothing, "bottom")}
