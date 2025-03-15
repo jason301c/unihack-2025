@@ -131,6 +131,15 @@
   }
 }
 
+@theme {
+  --color-prim-lightest: #FAFAFA; /* Very Light Gray */
+  --color-prim-light: #E4E5F1;    /* Light Gray */
+  --color-prim-neutral: #D2D3DB;  /* Gray */
+  --color-prim-dark: #9394A4;     /* Dark Gray */
+  --color-prim-darkest: #494B6A;  /* Very Dark Gray */
+  --color-prim-default: #36374E;  /* Darkest */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

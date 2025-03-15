@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
         hostname: '**',
       },
     ],
+    domains: ["image.uniqlo.com"],
   },
 };
+
 export default nextConfig;
