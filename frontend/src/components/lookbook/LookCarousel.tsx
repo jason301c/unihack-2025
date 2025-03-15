@@ -28,9 +28,6 @@ export default function LookBookDetail({
   useEffect(() => {
     if (!api) return;
 
-    api.scrollTo(initialIndex);
-    setActiveIndex(initialIndex);
-
     const onSelect = () => {
       // Ensure the index is within bounds
       console.log(api.selectedScrollSnap());
@@ -57,7 +54,11 @@ export default function LookBookDetail({
 
       {/* Carousel Container with extra width for peeking */}
       <Carousel
-        opts={{ align: "center" }}
+        opts={{
+          align: "center",
+          skipSnaps: false,
+          startIndex: initialIndex
+        }}
         setApi={setApi}
         className="w-full max-w-3xl mx-auto"
       >
