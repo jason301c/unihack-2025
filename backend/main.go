@@ -13,9 +13,11 @@ import (
 	"unihack-2025/backend/db"
 	"unihack-2025/backend/fetcher"
 	"unihack-2025/backend/googlescrape"
+	"unihack-2025/backend/middleware"
 	"unihack-2025/backend/s3"
-	
+
 	"github.com/gin-gonic/gin"
+	adapter "github.com/gwatts/gin-adapter"
 )
 
 // Request payload structure for first generation
@@ -144,14 +146,14 @@ func ExtractImageURL(output interface{}) (string, error) {
 			return urlStr, nil
 		}
 	}
-	
+
 	// Try to parse as a map
 	if outputMap, ok := output.(map[string]interface{}); ok {
 		// Check if there's a direct URL field
 		if urlStr, ok := outputMap["url"].(string); ok {
 			return urlStr, nil
 		}
-		
+
 		// Check for images array
 		if images, ok := outputMap["images"].([]interface{}); ok && len(images) > 0 {
 			if urlStr, ok := images[0].(string); ok {
@@ -159,13 +161,13 @@ func ExtractImageURL(output interface{}) (string, error) {
 			}
 		}
 	}
-	
+
 	// Convert the entire output to a string as a fallback
 	outputBytes, err := json.Marshal(output)
 	if err != nil {
 		return "", fmt.Errorf("failed to extract image URL from output: %v", err)
 	}
-	
+
 	return string(outputBytes), fmt.Errorf("couldn't extract a direct URL from output, returning raw data")
 }
 
@@ -236,7 +238,7 @@ func HandleFullOutfitGeneration(c *gin.Context) {
 	pantsPredictionID, err := client.StartGeneration(modelWithTopURL, req.GarmentImage, "tops")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": fmt.Sprintf("Pants generation failed: %v", err),
+			"error":      fmt.Sprintf("Pants generation failed: %v", err),
 			"top_result": topResult.Output, // Return the top result anyway
 		})
 		return
@@ -248,7 +250,7 @@ func HandleFullOutfitGeneration(c *gin.Context) {
 		status, err := client.CheckStatus(pantsPredictionID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": fmt.Sprintf("Error checking pants status: %v", err),
+				"error":      fmt.Sprintf("Error checking pants status: %v", err),
 				"top_result": topResult.Output, // Return the top result anyway
 			})
 			return
@@ -259,7 +261,7 @@ func HandleFullOutfitGeneration(c *gin.Context) {
 			break
 		} else if status.Status == "failed" {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": fmt.Sprintf("Pants generation failed: %s", status.Error),
+				"error":      fmt.Sprintf("Pants generation failed: %s", status.Error),
 				"top_result": topResult.Output, // Return the top result anyway
 			})
 			return
@@ -271,7 +273,7 @@ func HandleFullOutfitGeneration(c *gin.Context) {
 
 	if pantsResult == nil {
 		c.JSON(http.StatusRequestTimeout, gin.H{
-			"error": "Pants generation timed out",
+			"error":      "Pants generation timed out",
 			"top_result": topResult.Output, // Return the top result anyway
 		})
 		return
@@ -299,9 +301,9 @@ func main() {
 	} else {
 		defer db.Disconnect()
 	}
-	
+
 	r := gin.Default()
-	
+
 	// CORS middleware
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -313,29 +315,31 @@ func main() {
 		}
 		c.Next()
 	})
-	
+
+	r.Use(adapter.Wrap(middleware.EnsureValidToken()))
+
 	// Hello endpoint
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello from Unihack 2025 Backend!",
 		})
 	})
-	
+
 	// Search endpoint
 	r.GET("/search", googlescrape.HandleSearch)
-	
+
 	// Fetch random clothes endpoint
 	r.GET("/fetch", fetcher.HandleFetch)
-	
+
 	// New endpoint to fetch all S3 images
 	r.GET("/api/images", s3.ListS3ImagesHandler)
-	
+
 	// New endpoint for uploading files to S3
 	r.POST("/api/upload", s3.UploadFileHandler)
-	
+
 	// New endpoint for full outfit generation (top + pants)
 	r.POST("/generation", HandleFullOutfitGeneration)
-	
+
 	// Start the server
 	r.Run(":8080")
 }
