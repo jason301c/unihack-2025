@@ -20,10 +20,10 @@ interface WardrobeProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onSelectItem: (item: { id: string; imageUrl: string; type: "tops" | "bottoms" }) => void;
+  selectionType: "tops" | "bottoms"; // Force selection type based on what's missing
 }
 
-export default function Wardrobe({ isOpen, onOpenChange, onSelectItem }: WardrobeProps) {
-  const [selectedValue, setSelectedValue] = useState<"tops" | "bottoms">("tops");
+export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selectionType }: WardrobeProps) {
   const [items, setItems] = useState<ClothingItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +62,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem }: Wardrob
     onSelectItem({
       id: item.id,
       imageUrl: item.imageUrl,
-      type: selectedValue,
+      type: selectionType,
     });
     onOpenChange(false);
   };
@@ -78,7 +78,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem }: Wardrob
           <SheetHeader className="flex justify-between items-center px-4 pt-6 sticky top-0 z-10 bg-prim-darkest">
             <div className="flex justify-between items-center w-full px-2">
               <SheetTitle className="text-xl font-semibold text-prim-light">
-                Select {selectedValue === "tops" ? "Top" : "Bottom"}
+                Select {selectionType === "tops" ? "Top" : "Bottom"}
               </SheetTitle>
               <button 
                 onClick={() => onOpenChange(false)}
@@ -94,7 +94,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem }: Wardrob
             {/* Scrollable Grid Container */}
             <div className="flex-1 overflow-y-auto pb-24">
               <div className="grid grid-cols-3 gap-6 justify-items-center mt-6 py-4 w-full px-4">
-                {loading && <p className="text-center">Loading wardrobe...</p>}
+                {loading && <p className="text-center text-prim-light">Loading wardrobe...</p>}
                 {error && <p className="text-red-500 text-center">{error}</p>}
                 {!loading &&
                   items.map((item) => (
@@ -112,32 +112,6 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem }: Wardrob
                       />
                     </div>
                   ))}
-              </div>
-            </div>
-
-            {/* Fixed Bottom Navigation */}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-prim-darkest">
-              <div className="flex bg-gray-200 rounded-full w-[300px]">
-                <button
-                  onClick={() => setSelectedValue("tops")}
-                  className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
-                    selectedValue === "tops"
-                      ? "bg-prim-dark text-white shadow-md"
-                      : "text-prim-darkest"
-                  }`}
-                >
-                  Tops
-                </button>
-                <button
-                  onClick={() => setSelectedValue("bottoms")}
-                  className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
-                    selectedValue === "bottoms"
-                      ? "bg-prim-dark text-white shadow-md"
-                      : "text-prim-darkest"
-                  }`}
-                >
-                  Bottoms
-                </button>
               </div>
             </div>
           </div>

@@ -2,23 +2,24 @@
 
 import { createContext, useContext, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import SelectClothes from "@/components/livelook/SelectClothes";
+import SelectClothes from "@/components/livelook/select-clothes/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
 
-// Define the type for selected clothing items
-interface SelectedClothing {
+// Define the type for a clothing item
+interface ClothingItem {
   id: string;
   imageUrl: string;
-  type: "tops" | "bottoms";
   position: { x: number; y: number };
   scale: number;
 }
 
 // Define the context type
 interface LiveLookContextType {
-  selectedClothes: SelectedClothing[];
-  setSelectedClothes: (clothes: SelectedClothing[]) => void;
+  topClothing: ClothingItem | null;
+  bottomClothing: ClothingItem | null;
+  setTopClothing: (clothing: ClothingItem | null) => void;
+  setBottomClothing: (clothing: ClothingItem | null) => void;
   uploadedPhoto: string | null;
   setUploadedPhoto: (photo: string | null) => void;
 }
@@ -42,7 +43,8 @@ export default function LiveLook() {
   const step = Number(searchParams.get("step") || "0");
 
   // State that will be shared across components
-  const [selectedClothes, setSelectedClothes] = useState<SelectedClothing[]>([]);
+  const [topClothing, setTopClothing] = useState<ClothingItem | null>(null);
+  const [bottomClothing, setBottomClothing] = useState<ClothingItem | null>(null);
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
 
   // Handle navigation between steps
@@ -64,8 +66,10 @@ export default function LiveLook() {
 
   // Context value
   const contextValue: LiveLookContextType = {
-    selectedClothes,
-    setSelectedClothes,
+    topClothing,
+    bottomClothing,
+    setTopClothing,
+    setBottomClothing,
     uploadedPhoto,
     setUploadedPhoto
   };
