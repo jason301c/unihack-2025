@@ -51,6 +51,9 @@ func main() {
 	// New endpoint to fetch all S3 images
 	r.GET("/api/images", s3.ListS3ImagesHandler)
 
+	// New endpoint for uploading files to S3
+	r.POST("/api/upload", s3.UploadFileHandler)
+
 	// Start the server
 	r.Run(":8080")
 }
