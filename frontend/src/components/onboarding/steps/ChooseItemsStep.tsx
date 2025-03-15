@@ -55,7 +55,7 @@ export default async function ChooseItemsStep() {
   const items = await fetchItems();
 
   return (
-    <div className="px-6">
+    <div className="px-6 mt-6"> 
       <HeaderText />
       <div className="flex flex-col gap-4">
         {items.map((item) => (
