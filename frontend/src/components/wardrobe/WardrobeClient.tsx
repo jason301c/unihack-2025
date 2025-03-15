@@ -101,7 +101,7 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       {/* Check if wardrobe is empty or not */}
-      {items.length !== 0 ? (
+      {items.length === 0 ? (
         <EmptyWardrobe
           onUploadFromRoll={handleUploadFromRoll}
           onTakePhoto={handleOpenCamera}
@@ -120,7 +120,6 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
           onClose={() => setIsModalOpen(false)}
           onUploadFromRoll={handleUploadFromRoll}
           onTakePhoto={handleOpenCamera}
-          onBrowseCatalogue={handleBrowseCatalogue}
         />
       )}
 

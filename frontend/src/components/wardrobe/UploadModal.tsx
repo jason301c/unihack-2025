@@ -8,20 +8,18 @@ type UploadModalProps = {
   onClose: () => void;
   onUploadFromRoll: () => void;
   onTakePhoto: () => void;
-  onBrowseCatalogue: () => void;
 };
 
 export default function UploadModal({
   onClose,
   onUploadFromRoll,
   onTakePhoto,
-  onBrowseCatalogue,
 }: UploadModalProps) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-prim-darkest/90 z-50 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-black">Add to wardrobe</h3>
+          <h3 className="text-xl text-black">Add to Wardrobe</h3>
           <Button
             variant="ghost"
             size="icon"
@@ -47,14 +45,6 @@ export default function UploadModal({
             onClick={onTakePhoto}
           >
             Take Photo
-          </Button>
-          
-          <Button
-            variant="secondary"
-            className="w-full bg-prim-darkest hover:bg-prim-light hover:text-black text-white rounded-3xl py-6"
-            onClick={onBrowseCatalogue}
-          >
-            Browse Catalogue
           </Button>
         </div>
       </div>
