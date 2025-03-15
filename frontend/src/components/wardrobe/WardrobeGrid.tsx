@@ -30,22 +30,23 @@ export default function WardrobeGrid({
 
   return (
     <div className="flex flex-col h-full">
-      <header className="flex items-center justify-between mb-6 w-full">
-        <div className="flex items-center">
-          <BackButton />
-          <div className="text-lg font-semibold text-black ml-2">
+      {/* Modified header layout to match LookBook page */}
+      <div className="mb-6">
+        <BackButton />
+        <div className="flex items-center justify-between p-2">
+          <h1 className="text-3xl font-semibold text-prim-darkest">
             My Wardrobe
-          </div>
+          </h1>
+          <Button
+            variant="secondary"
+            className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            {isEditing ? "Done" : "Edit"}
+          </Button>
         </div>
-        <Button
-          variant="secondary"
-          className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? "Done" : "Edit"}
-        </Button>
-      </header>
-
+      </div>
+      
       <div className="grid grid-cols-3 gap-4 justify-items-center flex-grow">
         {items.map((item: ClothingItem) => (
           <div
@@ -80,14 +81,13 @@ export default function WardrobeGrid({
         </Button>
       </div>
 
-      {/* Search button at the bottom */}
-      <div className="mt-6 w-full flex justify-center">
+      {/* Updated Catalogue button at the bottom */}
+      <div className="mt-6 w-full fixed bottom-6 left-0 right-0 px-6">
         <Button
           onClick={() => setIsSearchOpen(true)}
-          className="rounded-full px-8 py-2 flex items-center gap-2 bg-prim-darkest hover:bg-prim-dark text-white"
+          className="w-full rounded-full py-6 flex items-center justify-center gap-2 bg-prim-darkest hover:bg-prim-dark text-white text-lg font-medium"
         >
-          <Search className="w-5 h-5" />
-          <span>Search</span>
+          Catalogue
         </Button>
       </div>
 

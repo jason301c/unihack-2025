@@ -62,15 +62,14 @@ export function SearchSection() {
 
   return (
     <div>
-      <h3 className="text-2xl text-bold text-prim-darkest mb-1">Search</h3>
+      <h3 className="text-2xl text-bold text-prim-darkest mb-1">Browse</h3>
       <Input
-        placeholder="Search for clothes..."
+        placeholder="Search the catalogue..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         className="w-full mb-4"
       />
-
       {transformedResult && (
         <ItemsSection
           query={transformedResult.query}
