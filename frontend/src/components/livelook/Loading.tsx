@@ -2,9 +2,9 @@
 
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import COLORS from "../../../constants/colors";
 import ILLUSTRATIONS from "../../../constants/illustrations";
 import { useLiveLook } from "@/app/livelook/page";
+import { useEffect } from "react";
 
 interface LoadingProps {
   onBack?: () => void;
@@ -12,16 +12,10 @@ interface LoadingProps {
 }
 
 export default function Loading({ onBack, onNext }: LoadingProps) {
-  const { isGenerating } = useLiveLook();
 
-  if (!isGenerating) {
-    onNext?.();
-    return null;
-  }
   return (
     <div
       className="flex flex-col h-screen items-center justify-center relative bg-white text-black"
-      style={{ backgroundColor: COLORS.background, color: COLORS.text }}
     >
       {/* Header with Back Button */}
       <header className="absolute top-0 left-0 p-4">
@@ -43,7 +37,7 @@ export default function Loading({ onBack, onNext }: LoadingProps) {
           Weaving your perfect fit..
         </h1>
         {/* Spinning Loader */}
-        <div className="mt-4 animate-spin rounded-full h-10 w-10 border-4 border-black-300 border-t-yellow-500"></div>
+        <div className="mt-4 animate-spin rounded-full h-10 w-10 border-4 border-black-300 border-t-prim-darkest"></div>
       </div>
     </div>
   );

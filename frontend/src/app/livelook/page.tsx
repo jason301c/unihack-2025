@@ -25,6 +25,8 @@ interface LiveLookContextType {
   setUploadedPhoto: (photo: string | null) => void;
   isGenerating: boolean;
   generateImage: () => Promise<void>;
+  generatedImage: string | null;
+  setGeneratedImage: (image: string | null) => void;
 }
 
 // Create the context with a default value
@@ -50,22 +52,25 @@ export default function LiveLook() {
   const [bottomClothing, setBottomClothing] = useState<ClothingItem | null>(null);
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
   // Generate function
   const generateImage = async () => {
-    if (!uploadedPhoto || !topClothing || !bottomClothing) {
+    if (!uploadedPhoto || (!topClothing && !bottomClothing)) {
       return;
     }
 
     setIsGenerating(true);
+    goToStep(2);
     try {
       // TODO: Add actual API call here
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulated delay
-      goToStep(2);
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulated delay
+      setGeneratedImage(uploadedPhoto); // This will be replaced with actual generated image
     } catch (error) {
       console.error('Failed to generate image:', error);
     } finally {
       setIsGenerating(false);
+      goToStep(3);
     }
   };
 
@@ -95,7 +100,9 @@ export default function LiveLook() {
     uploadedPhoto,
     setUploadedPhoto,
     isGenerating,
-    generateImage
+    generateImage,
+    generatedImage,
+    setGeneratedImage
   };
 
   // Render the appropriate component based on the current step

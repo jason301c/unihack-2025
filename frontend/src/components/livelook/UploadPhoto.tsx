@@ -16,7 +16,7 @@ interface UploadPhotoProps {
 }
 
 export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
-  const { uploadedPhoto, setUploadedPhoto, generateImage, isGenerating } = useLiveLook();
+  const {  topClothing, bottomClothing, uploadedPhoto, setUploadedPhoto, generateImage, isGenerating } = useLiveLook();
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,9 +44,15 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
 
   return (
     <div className="flex flex-col items-center h-[70vh] px-6 py-8">
-      <button className="w-full flex justify-start mb-12" onClick={onBack}>
+      <button className="w-full flex justify-start mb-6" onClick={onBack}>
         <ArrowLeft className="w-6 h-6" />
       </button>
+
+      {!topClothing && !bottomClothing && (
+        <h2 className="text-xl font-bold bg-red-200 w-full text-center py-4 mb-6">
+          Warning: No clothing items selected.
+        </h2>
+      )}
 
       <h2 className="text-4xl font-semibold text-prim-darkest mb-6 mr-24">
         Upload a <span className="text-prim-dark">photo</span> of yourself to

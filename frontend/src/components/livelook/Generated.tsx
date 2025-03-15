@@ -1,9 +1,9 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import { useState, useEffect } from "react";
 import { useLiveLook } from "@/app/livelook/page";
 import Loading from "@/components/livelook/Loading";
+import Image from "next/image";
 
 interface GeneratedProps {
   onBack?: () => void;
@@ -11,29 +11,9 @@ interface GeneratedProps {
 }
 
 export default function Generated({ onBack, onFinish }: GeneratedProps) {
-  const { selectedClothes, uploadedPhoto } = useLiveLook();
-  const [isLoading, setIsLoading] = useState(true);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const { generatedImage, isGenerating } = useLiveLook();
 
-  // Simulate API call to generate the image
-  useEffect(() => {
-    if (!uploadedPhoto || selectedClothes.length === 0) {
-      // If no photo uploaded or no clothes selected, go back
-      onBack?.();
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      // This would be replaced with actual API call to AI image service
-      // For now, just use the uploaded photo as a placeholder
-      setGeneratedImage(uploadedPhoto);
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [uploadedPhoto, selectedClothes, onBack]);
-
-  if (isLoading) {
+  if (isGenerating) {
     return <Loading />;
   }
 
@@ -52,11 +32,14 @@ export default function Generated({ onBack, onFinish }: GeneratedProps) {
       <div className="flex-1 flex flex-col items-center justify-center px-4 bg-gray-100">
         <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-md">
           {generatedImage && (
-            <img
-              src={generatedImage}
-              alt="Generated outfit"
-              className="w-full h-auto rounded-lg"
-            />
+            <div className="relative w-full aspect-[3/4]">
+              <Image
+                src={generatedImage}
+                alt="Generated outfit"
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
           )}
         </div>
       </div>
