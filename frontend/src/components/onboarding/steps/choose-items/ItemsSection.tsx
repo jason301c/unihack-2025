@@ -1,6 +1,6 @@
 'use client';
 
-import { QueryResult } from "@/app/catalogue/page";
+import { QueryResult } from "../ChooseItemsStep";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
@@ -12,14 +12,14 @@ interface ItemsSectionProps {
 export function ItemsSection({ query, images }: ItemsSectionProps) {
   return (
     <div className="space-y-2">
-      <h3 className="text-xl font-medium text-gray-200">{query}</h3>
+      <h3 className="text-xl font-medium text-prim-darkest">{query}</h3>
       <div className="grid grid-cols-3 gap-2">
         {images.map((image, idx) => (
           <div 
             key={idx}
             className="relative cursor-pointer"
           >
-            <div className="bg-gray-800 aspect-square rounded-md overflow-hidden flex items-center justify-center">
+            <div className="bg-prim-darkest aspect-square rounded-md overflow-hidden flex items-center justify-center">
               <Image
                 src={image.link}
                 alt={`Image for ${query}`}
@@ -32,7 +32,7 @@ export function ItemsSection({ query, images }: ItemsSectionProps) {
               />
                 {image.brand && (
                   <Badge
-                    className="absolute bottom-2 right-2 bg-black/70 hover:bg-black/90 transition-colors duration-200 text-white font-sm px-2 py-1 text-sm rounded-sm shadow-lg backdrop-blur-sm"
+                    className="absolute bottom-2 right-2 bg-prim-default/70 duration-200 text-white font-sm px-2 py-1 text-sm rounded-sm shadow-lg backdrop-blur-sm"
                   >
                     {image.brand}
                   </Badge>
