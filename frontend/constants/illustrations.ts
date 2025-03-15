@@ -4,6 +4,8 @@ const ILLUSTRATIONS = {
     mirrorlady: "/illustrations/homebutton2.svg",
     mannequin: "/illustrations/manni.svg",
     shrugMan: "/illustrations/shrugman.svg",
+    pianoGirl: "/illustrations/pianogirl.svg",
+    emptyLookBook: "/illustrations/emptylookbook.svg",
   };
   
   export default ILLUSTRATIONS;
