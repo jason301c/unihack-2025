@@ -62,11 +62,11 @@ export default async function AuthPage() {
             aria-label="Authentication options"
           >
             {/* Primary action: Log in */}
-            <Link href="/auth/login?returnTo=/onboarding">
+            <a href="/auth/login?returnTo=/onboarding">
               <div className={`${baseStyles} ${variantStyles.primary}`} aria-label="Login with email">
                 Log in
               </div>
-            </Link>
+            </a>
 
             {/* Secondary action: Continue as guest */}
             <Link href="/onboarding">

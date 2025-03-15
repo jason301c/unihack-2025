@@ -55,7 +55,8 @@ func main() {
 
 	// PROTECTED ROUTES:
 	// JWT middleware (PROTECTED ROUTES BEGIN BELOW)
-	r.Use(adapter.Wrap(middleware.EnsureValidToken()))
+	// r.Use(adapter.Wrap(middleware.EnsureValidToken())) 
+	// Later we'll protect
 
 	// Search endpoint
 	r.GET("/search", googlescrape.HandleSearch)
