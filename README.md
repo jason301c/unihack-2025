@@ -1,6 +1,9 @@
 # Unihack 2025 Project
 
-This repository contains the frontend and backend components for the Unihack 2025 project.
+This repository contains the frontend and backend components our UNIHACK 2025 project.
+
+## Overview
+Our project aims to provide users with a convenient and efficient way to find clothing products. We leverage the power of Next.js for the frontend and Go for the backend, ensuring a seamless and responsive user experience.
 
 ## Project Structure
 
@@ -9,11 +12,10 @@ This repository contains the frontend and backend components for the Unihack 202
 └── backend/      # Go backend API server
 ```
 
-## Prerequisites
+## Quick Start with Docker 
 
-- Docker and Docker Compose
-
-## Quick Start with Docker
+### Prerequisites
+- Docker or Docker Desktop installed
 
 1. Clone the repository:
    ```bash
@@ -21,7 +23,7 @@ This repository contains the frontend and backend components for the Unihack 202
    cd unihack-2025
    ```
 
-2. Create .env files in the root directory: `frontend.env` and `backend.env` containing the respective environment variables
+2. Create .env files in the root directory: `frontend.env` and `backend.env` containing the respective environment variables (or empty).
 
 3. Start the application:
    ```bash
@@ -37,8 +39,16 @@ Environment files for backend and frontend can be put into `backend.env` and `fr
 
 **(IMPORTANT)** The frontend should use NEXT_PUBLIC_API_URL for accessing the API (done in the Dockerfile)
 
+**After changing the environment files, you need to restart the application with `docker-compose down` and then `docker-compose up`**
+
+## Accessing docker containers
+You can access the containers by going to Docker Desktop and clicking on the container name. You can then access the terminal and run commands.
+
+This can be used for updating / installing packagse.
+
 ## API Endpoints
 
 ### Backend
 
-- `GET /hello` - Test endpoint that returns a welcome message
+- `GET /fetch` - Fetch MongoDB for random brands and clothing products
+- `GET /search?q=yourquery` - Look up images on Google of a clothing product
