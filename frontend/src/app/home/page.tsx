@@ -1,5 +1,5 @@
-import ILLUSTRATIONS from "../../../constants/illustrations";
 import { User } from "lucide-react";
+import ILLUSTRATIONS from "../../../constants/illustrations";
 
 export default function Home() {
   return (
