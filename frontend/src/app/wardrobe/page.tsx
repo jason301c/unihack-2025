@@ -3,9 +3,11 @@
 import React, { useState, useRef, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import {ArrowLeft } from "lucide-react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
+import UploadModal from "@/components/wardrobe/UploadModal";
+import COLORS from "../../../constants/colors";
 
 type ClothingItem = {
   id: string;
@@ -14,6 +16,8 @@ type ClothingItem = {
 };
 
 export default function Wardrobe() {
+  const router = useRouter();
+  
   const [items, setItems] = useState<ClothingItem[]>([
     {
       id: "1",
@@ -42,17 +46,15 @@ export default function Wardrobe() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // -----------------------------
   //  ADD / REMOVE ITEM LOGIC
   // -----------------------------
   // Simple placeholder for adding a new item
   const handleAddItem = () => {
-    const newItem: ClothingItem = {
-      id: Math.random().toString(36).substring(2),
-      name: "New Item",
-      imageUrl: "https://via.placeholder.com/150?text=New+Item",
-    };
-    setItems((prev) => [...prev, newItem]);
+    setIsModalOpen(true);
   };
 
   // Remove an item by ID
@@ -87,11 +89,16 @@ export default function Wardrobe() {
     fileInputRef.current?.click();
   };
 
+   // Trigger hidden input for "Upload from Camera Roll"
+   const handleBrowseCatalogue = () => {
+    router.push("/catalogue")
+  };
+
   // -----------------------------
   //  RENDER
   // -----------------------------
   return (
-    <main className="min-h-screen bg-black text-white px-4 py-6 flex flex-col">
+    <main className="min-h-screen bg-black text-white px-8 py-6 flex flex-col">
       {/* Top bar */}
       {/* Left side: Back arrow + Title */}
       <div className="flex items-center gap-2">
@@ -106,8 +113,8 @@ export default function Wardrobe() {
       </div>
       <header className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">My Wardrobe</h2>
-        <Button variant="secondary" className="hover:bg-gray-200 rounded-3xl">
-          Edit
+        <Button variant="secondary" className="hover:bg-gray-200 rounded-3xl px-6" style={{background: COLORS.secondary}}onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? "Done" : "Edit"}
         </Button>
       </header>
 
@@ -116,18 +123,25 @@ export default function Wardrobe() {
         <EmptyWardrobe
           onUploadFromRoll={handleUploadFromRoll}
           onTakePhoto={handleOpenCamera}
-          onBrowseCatalogue={() => {
-            /* Implement your browse logic */
-          }}
+          onBrowseCatalogue={handleBrowseCatalogue}
         />
       ) : (
-        // ... Your populated wardrobe UI here ...
         <WardrobeGrid
         items={items}
         onRemoveItem={handleRemoveItem}
         onAddItem={handleAddItem}
+        isEditing={isEditing}
       />
       )}
+
+      {isModalOpen &&
+        <UploadModal
+        onClose={() => setIsModalOpen(false)}
+        onUploadFromRoll={handleUploadFromRoll}
+        onTakePhoto={handleOpenCamera}
+        onBrowseCatalogue={handleBrowseCatalogue}
+      />
+      }
       {/* Hidden inputs for camera & file upload */}
       <input
         ref={cameraInputRef}
