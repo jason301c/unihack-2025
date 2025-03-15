@@ -1,5 +1,4 @@
 const ILLUSTRATIONS = {
-zahir-frontend-tweaks
   dressgirl: "/illustrations/dressgirl.svg",
   clotheshanger: "/illustrations/homebutton1.svg",
   mirrorlady: "/illustrations/homebutton2.svg",
@@ -8,6 +7,7 @@ zahir-frontend-tweaks
   pianoGirl: "/illustrations/pianogirl.svg",
   emptyLookBook: "/illustrations/emptylookbook.svg",
   lookbook: "/illustrations/Lookbook.svg",
+  emptyWardrobe: "/illustrations/emptywardrobe.png",
 };
 
 export default ILLUSTRATIONS;

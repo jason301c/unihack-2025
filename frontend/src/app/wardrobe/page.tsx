@@ -20,7 +20,6 @@ export default function Wardrobe() {
   const [items, setItems] = useState<ClothingItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Refs for hidden file inputs
@@ -136,16 +135,6 @@ export default function Wardrobe() {
           <ArrowLeft className="h-6 w-6" />
         </Button>
       </div>
-      <header className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-black">My Wardrobe</h2>
-        <Button
-          variant="secondary"
-          className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? "Done" : "Edit"}
-        </Button>
-      </header>
 
       {/* Loading or Error States */}
       {loading && <p className="text-center">Loading wardrobe...</p>}
@@ -163,7 +152,6 @@ export default function Wardrobe() {
           items={items}
           onRemoveItem={handleRemoveItem}
           onAddItem={handleAddItem}
-          isEditing={isEditing}
         />
       )}
 

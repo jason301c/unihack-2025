@@ -16,21 +16,24 @@ export default function EmptyWardrobe({
   onBrowseCatalogue,
 }: EmptyWardrobeProps) {
   return (
-    <div className="flex-grow flex flex-col items-center ">
-      <p className="text-black font-xs mb-8 font-thin">
+    <div className="flex flex-col items-center justify-center">
+      <header className="flex items-center justify-between mb-6">
+        <div className="text-lg font-semibold text-black">My Wardrobe</div>
+      </header>
+      <p className="text-black font-xs mb-8 font-thin pr-4">
         Oops... No items found. Please choose one of the options below to add
         items.
       </p>
-      <div className="w-100 bottom-[180px] left-0 right-0 z-0 flex justify-center">
+      <div className="w-90 bottom-[180px] left-0 right-0 z-0 flex justify-center">
           <Image
             width={200}
             height={200}
-            src={ILLUSTRATIONS.shrugMan}
+            src={ILLUSTRATIONS.emptyWardrobe}
             alt="No looks"
             className="object-contain w-auto max-h-[40vh]"
           />
         </div>
-      <div className="space-y-5 w-full max-w-sm">
+      <div className="space-y-5 w-full max-w-sm px-4">
         <Button
           variant="secondary"
           className="text-white w-full rounded-3xl py-6 bg-prim-darkest hover:text-black hover:bg-prim-light"
