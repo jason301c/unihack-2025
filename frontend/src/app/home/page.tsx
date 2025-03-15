@@ -1,4 +1,6 @@
 import { User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import ILLUSTRATIONS from "../../../constants/illustrations";
 
 export default function Home() {
@@ -15,15 +17,20 @@ export default function Home() {
         {/* Left-aligned Actions title */}
         <h2 className="text-2xl font-semibold self-start mb-2">Actions</h2>
 
-        <button className="w-full py-10 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral relative overflow-hidden">
-          <span className="z-10">Live Look</span>
-          <img
-          src={ILLUSTRATIONS.mirrorlady}
-          alt="Icon"
-          className="absolute right-[-10px] top-0 h-full min-w-[150px] object-cover object-[75%_center] rounded-r-lg"
-        />
-        </button>
-
+        {/* Action Buttons */}
+        <Link href="/wardrobe" className="w-full">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-blue-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+            <span>Your Wardrobe</span>
+            <Image
+              src={ILLUSTRATIONS.clotheshanger}
+              alt="Icon"
+              width={96}
+              height={96}
+              className="h-24 object-cover"
+            />
+          </button>
+        </Link>
+        
         <button className="w-full py-10 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral relative overflow-hidden">
           <span className="z-10">Look Book</span>
           <img
@@ -32,15 +39,20 @@ export default function Home() {
             className="absolute right-[10px] top-0 h-full min-w-[150px] object-cover object-right rounded-r-lg"
           />
         </button>
+
         
-        <button className="w-full py-10 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral relative overflow-hidden">
-          <span className="z-10">Your Wardrobe</span>
-          <img
-            src={ILLUSTRATIONS.clotheshanger}
-            alt="Icon"
-            className="absolute right-0 top-0 h-full min-w-[150px] object-cover object-right rounded-r-lg"
-          />
-        </button>
+        <Link href="/livelook" className="w-full">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-green-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+            <span>Live Look</span>
+            <Image
+              src={ILLUSTRATIONS.mirrorlady}
+              alt="Icon"
+              width={96}
+              height={96}
+              className="h-24 object-cover"
+            />
+          </button>
+        </Link>
         
       </section>
     </div>
