@@ -115,7 +115,7 @@ export default function LiveLook() {
       case 2:
         return <Loading onBack={goBack} onNext={() => goToStep(3)}/>;
       case 3:
-        return <Generated onBack={goBack} onFinish={goToHome} />;
+        return <Generated onBack={goToHome} onFinish={goToHome} />;
       default:
         return <SelectClothes onBack={goBack} onNext={() => goToStep(1)} />;
     }
