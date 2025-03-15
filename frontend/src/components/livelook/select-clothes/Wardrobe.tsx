@@ -28,6 +28,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch wardrobe items on component mount
   useEffect(() => {
     const fetchImages = async () => {
       setLoading(true);

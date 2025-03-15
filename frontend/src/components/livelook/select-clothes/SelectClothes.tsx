@@ -41,6 +41,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     wardrobeButtonText = "Wardrobe Complete";
   }
 
+  /*
+    Function to handle selecting a clothing item from the wardrobe.
+    This function is passed down to the Wardrobe component.
+  */
   const handleClothingSelect = (clothing: { id: string; imageUrl: string; type: "tops" | "bottoms" }) => {
     const newItem = {
       id: clothing.id,
@@ -57,6 +61,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     setIsOpen(false);
   };
 
+  /*
+    Function to remove a clothing item from the mannequin.
+    This function is called when the user clicks the "X" button on a clothing item.
+  */
   const removeItem = (type: "tops" | "bottoms") => {
     setActiveItem(null);
     if (type === "tops") {
@@ -66,6 +74,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     }
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const startDrag = (type: "top" | "bottom", clientX: number, clientY: number) => {
     const item = type === "top" ? topClothing : bottomClothing;
     if (!item) return;
@@ -75,6 +87,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     setItemOffset(item.position);
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const handleTouchStart = (type: "top" | "bottom", e: TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
     const touch = e.touches[0];
@@ -82,11 +98,19 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     startDrag(type, touch.clientX, touch.clientY);
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const handleMouseDown = (type: "top" | "bottom", e: MouseEvent<HTMLDivElement>) => {
     setActiveItem(type);
     startDrag(type, e.clientX, e.clientY);
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const handleMove = (clientX: number, clientY: number) => {
     if (!isDragging || !dragStart) return;
 
@@ -105,6 +129,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     }
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const handleResizeStart = (type: "top" | "bottom", e: MouseEvent<HTMLButtonElement> | TouchEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -118,6 +146,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     setItemOffset({ x: item.scale, y: item.scale });
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   const handleResize = (clientX: number, clientY: number) => {
     if (!isResizing || !dragStart) return;
 
@@ -131,6 +163,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     }
   };
 
+  /*
+    Functions to handle dragging and resizing clothing items.
+    These functions are called when the user interacts with a clothing item.
+  */
   useEffect(() => {
     const handleTouchMove = (e: globalThis.TouchEvent) => {
       if (!isDragging && !isResizing) return;
@@ -174,7 +210,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     };
   }, [isDragging, isResizing, handleMove, handleResize]);
 
-  // Handle clicking outside to dismiss active item
+  /*
+    Function to dismiss the active clothing item when clicking outside of it.
+    This function is called when the user clicks outside of a clothing item.
+  */
   useEffect(() => {
     const handleDismiss = (e: globalThis.MouseEvent | globalThis.TouchEvent) => {
       if (!activeItem) return;
@@ -275,10 +314,10 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
           <ArrowLeft className="w-6 h-6" />
         </button>
 
-        {/* Button to try it on (go next) - Only enabled when both items are selected */}
+        {/* Button to try it on (go next) - Only enabled when at least one item is selected */}
         <button
           onClick={onNext}
-          disabled={!(topClothing && bottomClothing)}
+          disabled={!(topClothing || bottomClothing)}
           className={`absolute left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-xl shadow-md flex items-center gap-2 ${
             topClothing && bottomClothing
               ? "bg-prim-darkest text-prim-lightest hover:opacity-90 transition"
