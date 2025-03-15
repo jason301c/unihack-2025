@@ -8,11 +8,9 @@ import (
 	"unihack-2025/backend/fashion"
 	"unihack-2025/backend/fetcher"
 	"unihack-2025/backend/googlescrape"
-	"unihack-2025/backend/middleware"
 	"unihack-2025/backend/s3"
 
 	"github.com/gin-gonic/gin"
-	adapter "github.com/gwatts/gin-adapter"
 )
 
 func main() {
@@ -55,7 +53,7 @@ func main() {
 
 	// PROTECTED ROUTES:
 	// JWT middleware (PROTECTED ROUTES BEGIN BELOW)
-	// r.Use(adapter.Wrap(middleware.EnsureValidToken())) 
+	// r.Use(adapter.Wrap(middleware.EnsureValidToken()))
 	// Later we'll protect
 
 	// Search endpoint
