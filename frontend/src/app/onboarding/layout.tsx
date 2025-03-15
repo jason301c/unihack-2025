@@ -51,6 +51,10 @@ export default function OnboardingLayout({
     }
   };
 
+  // For the first page, we just return the children
+  if (currentStep === 0) {
+    return <div className="flex-grow">{children}</div>;
+  }
   return (
     <div className="flex flex-col min-h-screen">
       {/* Back button */}
