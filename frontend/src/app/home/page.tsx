@@ -1,7 +1,7 @@
-import ILLUSTRATIONS from "../../../constants/illustrations";
 import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ILLUSTRATIONS from "../../../constants/illustrations";
 
 export default function Home() {
   return (
@@ -30,7 +30,17 @@ export default function Home() {
             />
           </button>
         </Link>
+        
+        <button className="w-full py-10 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral relative overflow-hidden">
+          <span className="z-10">Look Book</span>
+          <img
+            src={ILLUSTRATIONS.lookbook}
+            alt="Icon"
+            className="absolute right-[10px] top-0 h-full min-w-[150px] object-cover object-right rounded-r-lg"
+          />
+        </button>
 
+        
         <Link href="/livelook" className="w-full">
           <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-green-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
             <span>Live Look</span>
@@ -43,6 +53,7 @@ export default function Home() {
             />
           </button>
         </Link>
+        
       </section>
     </div>
   );
