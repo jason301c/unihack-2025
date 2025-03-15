@@ -1,15 +1,36 @@
-"use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import WelcomeStep from "@/components/onboarding/steps/WelcomeStep";
+import ClothingTypeStep from "@/components/onboarding/steps/ClothingTypeStep";
+import ChooseItemsStep from "@/components/onboarding/steps/ChooseItemsStep";
+import UploadPhotoStep from "@/components/onboarding/steps/UploadPhotoStep";
+import UploadClothesStep from "@/components/onboarding/steps/UploadClothesStep";
 
-export default function OnboardingPage() {
-  const router = useRouter();
-  
-  useEffect(() => {
-    // Redirect to step 0 when accessing the base onboarding page
-    router.replace('/onboarding/0');
-  }, [router]);
+interface OnboardingStepPageProps {
+  searchParams: {
+    step: string;
+  };
+}
 
-  // Return null as this component will immediately redirect
-  return null;
+export default async function OnboardingStepPage({
+  searchParams,
+}: OnboardingStepPageProps) {
+  const params = await searchParams;
+  const stepNumber = parseInt(params.step, 10);
+
+  // Render the appropriate step component based on the step number
+  switch (stepNumber) {
+    case 0:
+      return <WelcomeStep />;
+    case 1:
+      return <ClothingTypeStep />;
+    case 2:
+      return <ChooseItemsStep />;
+    case 3:
+      return <UploadClothesStep />;
+    case 4:
+      return <UploadPhotoStep />;
+    default:
+      // Default to the welcome step if the step number is invalid
+      return <WelcomeStep />;
+  }
 }
