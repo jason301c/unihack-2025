@@ -6,6 +6,7 @@ import {ArrowLeft } from "lucide-react";
 import router from "next/router";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
+import UploadModal from "@/components/wardrobe/UploadModal";
 
 type ClothingItem = {
   id: string;
@@ -42,17 +43,15 @@ export default function Wardrobe() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // -----------------------------
   //  ADD / REMOVE ITEM LOGIC
   // -----------------------------
   // Simple placeholder for adding a new item
   const handleAddItem = () => {
-    const newItem: ClothingItem = {
-      id: Math.random().toString(36).substring(2),
-      name: "New Item",
-      imageUrl: "https://via.placeholder.com/150?text=New+Item",
-    };
-    setItems((prev) => [...prev, newItem]);
+    setIsModalOpen(true);
   };
 
   // Remove an item by ID
@@ -106,8 +105,8 @@ export default function Wardrobe() {
       </div>
       <header className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">My Wardrobe</h2>
-        <Button variant="secondary" className="hover:bg-gray-200 rounded-3xl">
-          Edit
+        <Button variant="secondary" className="hover:bg-gray-200 rounded-3xl" onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? "Done" : "Edit"}
         </Button>
       </header>
 
@@ -121,13 +120,24 @@ export default function Wardrobe() {
           }}
         />
       ) : (
-        // ... Your populated wardrobe UI here ...
         <WardrobeGrid
         items={items}
         onRemoveItem={handleRemoveItem}
         onAddItem={handleAddItem}
+        isEditing={isEditing}
       />
       )}
+
+      {isModalOpen &&
+        <UploadModal
+        onClose={() => setIsModalOpen(false)}
+        onUploadFromRoll={handleUploadFromRoll}
+        onTakePhoto={handleOpenCamera}
+        onBrowseCatalogue={() => {
+          // Implement your browse logic here if needed
+        }}
+      />
+      }
       {/* Hidden inputs for camera & file upload */}
       <input
         ref={cameraInputRef}
