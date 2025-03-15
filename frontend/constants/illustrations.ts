@@ -3,6 +3,7 @@ const ILLUSTRATIONS = {
     clotheshanger: "/illustrations/homebutton1.svg",
     mirrorlady: "/illustrations/homebutton2.svg",
     mannequin: "/illustrations/manni.svg",
+    shrugMan: "/illustrations/shrugman.svg",
   };
   
   export default ILLUSTRATIONS;

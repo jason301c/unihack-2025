@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import ILLUSTRATIONS from "../../../constants/illustrations";
 
 type EmptyWardrobeProps = {
   onUploadFromRoll?: () => void;
@@ -20,32 +21,32 @@ export default function EmptyWardrobe({
         Oops... No items found. Please choose one of the options below to add
         items.
       </p>
-      <div className="relative w-40 h-40 bg-white mb-8 mx-auto rounded-md">
+      <div className="relative w-100 h-100 mb-8 mx-auto rounded-md">
         <Image
-          src="/placeholder.png"
+          src={`${ILLUSTRATIONS.shrugMan}`}
           alt="No items placeholder"
           fill
           className="object-contain"
         />
       </div>
-      <div className="space-y-3 w-full max-w-sm">
+      <div className="space-y-5 w-full max-w-sm">
         <Button
           variant="secondary"
-          className="w-full rounded-3xl"
+          className="w-full rounded-3xl py-6"
           onClick={onUploadFromRoll}
         >
           Upload from Camera Roll
         </Button>
         <Button
           variant="secondary"
-          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl"
+          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl py-6"
           onClick={onTakePhoto}
         >
           Take Photo
         </Button>
         <Button
           variant="secondary"
-          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl"
+          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl py-6"
           onClick={onBrowseCatalogue}
         >
           Browse Catalogue
