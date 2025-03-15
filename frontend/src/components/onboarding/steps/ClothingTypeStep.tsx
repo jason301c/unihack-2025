@@ -6,7 +6,7 @@ interface ClothingButtonProps {
 
 const ClothingButton: React.FC<ClothingButtonProps> = ({ label }) => {
   return (
-    <button className="bg-prim-darkest text-white rounded-lg p-4 w-full text-center text-lg hover:bg-prim-neutral hover:text-prim-darkest">
+    <button className="bg-prim-darkest text-white rounded-lg p-4 w-full text-left text-lg hover:bg-prim-neutral hover:text-prim-darkest">
       {label}
     </button>
   );
@@ -21,7 +21,7 @@ const ClothingTypeStep: React.FC = () => {
       
       <div className="w-full text-left">
         <p className="text-xl font-semibold text-prim-darkest mb-4 mt-4">
-          Choose your preferred style:
+          Choose your preferred style.
         </p>
       </div>
       <div className="grid grid-cols-1 gap-4 w-full max-w-md">

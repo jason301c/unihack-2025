@@ -11,7 +11,7 @@ export default function Home() {
       </header>
 
       {/* Actions Section */}
-      <section className="flex mt-[5vh] flex-col w-full px-6 py-4 space-y-6 text-prim-darkest">
+      <section className="flex mt-[5vh] flex-col w-full px-6 py-4 space-y-6 text-prim">
         {/* Left-aligned Actions title */}
         <h2 className="text-2xl font-semibold self-start mb-2">Actions</h2>
 
