@@ -1,8 +1,9 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import Image from "next/image";
-import ILLUSTRATIONS from "../../../constants/illustrations";
+import { useState, useEffect } from "react";
+import { useLiveLook } from "@/app/livelook/page";
+import Loading from "@/components/livelook/Loading";
 
 interface GeneratedProps {
   onBack?: () => void;
@@ -10,50 +11,67 @@ interface GeneratedProps {
 }
 
 export default function Generated({ onBack, onFinish }: GeneratedProps) {
+  const { selectedClothes, uploadedPhoto } = useLiveLook();
+  const [isLoading, setIsLoading] = useState(true);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+
+  // Simulate API call to generate the image
+  useEffect(() => {
+    if (!uploadedPhoto || selectedClothes.length === 0) {
+      // If no photo uploaded or no clothes selected, go back
+      onBack?.();
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      // This would be replaced with actual API call to AI image service
+      // For now, just use the uploaded photo as a placeholder
+      setGeneratedImage(uploadedPhoto);
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [uploadedPhoto, selectedClothes, onBack]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="flex flex-col h-screen bg-white text-black">
-      {/* Header with Back Button & Title */}
-      <header className="flex items-center p-4 border-b">
-        <button className="text-black" onClick={onBack}>
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <header className="flex items-center justify-between py-10 px-4 bg-white">
+        <button className="text-prim-darkest" onClick={onBack}>
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-xl font-bold mx-auto">Your Live Look</h1>
+        <h1 className="text-xl font-bold text-prim-darkest">Your Live Look</h1>
+        <div className="w-6" /> {/* Empty div for balance */}
       </header>
 
-      {/* Centered Generated Image */}
-      <div className="flex flex-1 items-center justify-center">
-        <div className="w-86 h-115 border-2 border-gray-300 rounded-md flex items-center justify-center">
-          <Image
-            src={ILLUSTRATIONS.pianoGirl}
-            alt="Generated Look"
-            width={300}
-            height={400}
-            className="w-full h-full obje   ct-contain"
-          />
+      {/* Generated Image */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 bg-gray-100">
+        <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-md">
+          {generatedImage && (
+            <img
+              src={generatedImage}
+              alt="Generated outfit"
+              className="w-full h-auto rounded-lg"
+            />
+          )}
         </div>
       </div>
 
-      {/* Input and Buttons at Bottom */}
-      <div className="p-4 w-full max-w-md mx-auto">
-        {/* Text Input */}
-        <input
-          type="text"
-          placeholder="Describe your outfit..."
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
-        />
-
-        {/* Save Button */}
+      {/* Actions */}
+      <div className="flex flex-col p-4 bg-white">
         <button
           onClick={onFinish}
-          className="w-full p-3 bg-prim-darkest text-white rounded-md shadow-md hover:opacity-90 transition mb-3"
+          className="bg-prim-darkest text-white py-3 rounded-xl mb-2"
         >
-          Save Look
+          Save to Lookbook
         </button>
-
-        {/* Try Again Button */}
         <button
           onClick={onBack}
-          className="w-full p-3 bg-gray-300 text-gray-700 rounded-md shadow-md hover:bg-gray-400 transition"
+          className="border border-prim-darkest text-prim-darkest py-3 rounded-xl"
         >
           Try Again
         </button>

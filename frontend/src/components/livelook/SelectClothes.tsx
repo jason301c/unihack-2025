@@ -1,40 +1,34 @@
 "use client";
 
-import { useState, useRef, MouseEvent, TouchEvent, useEffect } from "react";
+import { useState, MouseEvent, TouchEvent, useEffect } from "react";
 import Image from "next/image";
 import ILLUSTRATIONS from "../../../constants/illustrations";
 import { ArrowLeft, ArrowUp, X, Move } from "lucide-react";
 import Wardrobe from "@/components/livelook/Wardrobe";
+import { useLiveLook } from "@/app/livelook/page";
 
-interface SelectedClothing {
-  id: string;
-  imageUrl: string;
-  type: "tops" | "bottoms";
-  position: { x: number; y: number };
-  scale: number;
-}
-
+// Using the shared type from LiveLookContext
 interface SelectClothesProps {
   onBack?: () => void;
   onNext?: () => void;
 }
 
 export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
+  const { selectedClothes, setSelectedClothes } = useLiveLook();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedClothes, setSelectedClothes] = useState<SelectedClothing[]>([]);
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const [isResizing, setIsResizing] = useState<string | null>(null);
   const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
   const [itemOffset, setItemOffset] = useState({ x: 0, y: 0 });
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
-  const handleClothingSelect = (clothing: Omit<SelectedClothing, "position" | "scale">) => {
-    setSelectedClothes(prev => [...prev, { ...clothing, position: { x: 0, y: 0 }, scale: 1 }]);
+  const handleClothingSelect = (clothing: Omit<typeof selectedClothes[0], "position" | "scale">) => {
+    setSelectedClothes([...selectedClothes, { ...clothing, position: { x: 0, y: 0 }, scale: 1 }]);
   };
 
   const removeItem = (id: string) => {
     setActiveItem(null);
-    setSelectedClothes(prev => prev.filter(item => item.id !== id));
+    setSelectedClothes(selectedClothes.filter(item => item.id !== id));
   };
 
   const startDrag = (id: string, clientX: number, clientY: number) => {
@@ -71,7 +65,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     const deltaX = clientX - dragStart.x;
     const deltaY = clientY - dragStart.y;
 
-    setSelectedClothes(prev => prev.map(item => {
+    setSelectedClothes(selectedClothes.map(item => {
       if (item.id === isDragging) {
         return {
           ...item,
@@ -104,7 +98,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     const deltaY = (clientY - dragStart.y) / 100;
     const newScale = Math.max(0.2, Math.min(3, itemOffset.x + deltaY));
 
-    setSelectedClothes(prev => prev.map(item => {
+    setSelectedClothes(selectedClothes.map(item => {
       if (item.id === isResizing) {
         return {
           ...item,
@@ -156,7 +150,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleEnd);
     };
-  }, [isDragging, isResizing, dragStart]);
+  }, [isDragging, isResizing, dragStart, itemOffset, selectedClothes, setSelectedClothes]);
 
   // Handle clicking outside to dismiss active item
   useEffect(() => {
@@ -181,6 +175,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
     };
   }, [activeItem]);
 
+  // Render the clothing items based on type
   const renderItems = (type: "tops" | "bottoms") => {
     return selectedClothes
       .filter(item => item.type === type)

@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import UploadBox from "@/components/onboarding/steps/upload/UploadBox";
 import {
   UploadFileIcon,
   CameraIcon,
 } from "@/components/onboarding/steps/upload/UploadIcons";
 import { ArrowLeft } from "lucide-react";
+import { useLiveLook } from "@/app/livelook/page";
 
 interface UploadPhotoProps {
   onBack: () => void;
@@ -13,7 +14,7 @@ interface UploadPhotoProps {
 }
 
 export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const { uploadedPhoto, setUploadedPhoto } = useLiveLook();
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -26,14 +27,18 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
     const file = event.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
+      setUploadedPhoto(imageUrl);
+      onNext();
     }
-    onNext();
   };
 
   const handleOpenCamera = () => {
     // Trigger the hidden camera input
     cameraInputRef.current?.click();
+  };
+
+  const handleRemoveImage = () => {
+    setUploadedPhoto(null);
   };
 
   return (
@@ -51,15 +56,15 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
         A clear, unobstructed shot of your whole body works best.
       </p>
 
-      {selectedImage ? (
+      {uploadedPhoto ? (
         <div className="mb-8">
           <img
-            src={selectedImage}
+            src={uploadedPhoto}
             alt="User selfie"
             className="w-64 h-64 object-cover rounded-lg border-2"
           />
           <button
-            onClick={() => setSelectedImage(null)}
+            onClick={handleRemoveImage}
             className="mt-2 text-prim-dark underline"
           >
             Remove image

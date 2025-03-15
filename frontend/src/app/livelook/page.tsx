@@ -1,14 +1,49 @@
 "use client";
 
+import { createContext, useContext, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SelectClothes from "@/components/livelook/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
 
+// Define the type for selected clothing items
+interface SelectedClothing {
+  id: string;
+  imageUrl: string;
+  type: "tops" | "bottoms";
+  position: { x: number; y: number };
+  scale: number;
+}
+
+// Define the context type
+interface LiveLookContextType {
+  selectedClothes: SelectedClothing[];
+  setSelectedClothes: (clothes: SelectedClothing[]) => void;
+  uploadedPhoto: string | null;
+  setUploadedPhoto: (photo: string | null) => void;
+}
+
+// Create the context with a default value
+const LiveLookContext = createContext<LiveLookContextType | undefined>(undefined);
+
+// Custom hook for accessing the context
+export const useLiveLook = () => {
+  const context = useContext(LiveLookContext);
+  if (!context) {
+    throw new Error("useLiveLook must be used within a LiveLookProvider");
+  }
+  return context;
+};
+
+// The page itself
 export default function LiveLook() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const step = Number(searchParams.get("step") || "0");
+
+  // State that will be shared across components
+  const [selectedClothes, setSelectedClothes] = useState<SelectedClothing[]>([]);
+  const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
 
   // Handle navigation between steps
   const goToStep = (newStep: number) => {
@@ -27,6 +62,14 @@ export default function LiveLook() {
     router.push("/");
   };
 
+  // Context value
+  const contextValue: LiveLookContextType = {
+    selectedClothes,
+    setSelectedClothes,
+    uploadedPhoto,
+    setUploadedPhoto
+  };
+
   // Render the appropriate component based on the current step
   const renderStep = () => {
     switch (step) {
@@ -41,5 +84,9 @@ export default function LiveLook() {
     }
   };
 
-  return renderStep();
+  return (
+    <LiveLookContext.Provider value={contextValue}>
+      {renderStep()}
+    </LiveLookContext.Provider>
+  );
 }
