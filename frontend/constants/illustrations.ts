@@ -7,6 +7,7 @@ const ILLUSTRATIONS = {
   pianoGirl: "/illustrations/pianogirl.svg",
   emptyLookBook: "/illustrations/emptylookbook.svg",
   lookbook: "/illustrations/Lookbook.svg",
+  emptyWardrobe: "/illustrations/emptywardrobe.png",
 };
 
 export default ILLUSTRATIONS;
