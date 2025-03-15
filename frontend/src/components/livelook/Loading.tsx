@@ -4,12 +4,20 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import COLORS from "../../../constants/colors";
 import ILLUSTRATIONS from "../../../constants/illustrations";
+import { useLiveLook } from "@/app/livelook/page";
 
 interface LoadingProps {
   onBack?: () => void;
+  onNext?: () => void;
 }
 
-export default function Loading({ onBack }: LoadingProps) {
+export default function Loading({ onBack, onNext }: LoadingProps) {
+  const { isGenerating } = useLiveLook();
+
+  if (!isGenerating) {
+    onNext?.();
+    return null;
+  }
   return (
     <div
       className="flex flex-col h-screen items-center justify-center relative bg-white text-black"

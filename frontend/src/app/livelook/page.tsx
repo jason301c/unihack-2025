@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SelectClothes from "@/components/livelook/select-clothes/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
+import Loading from "@/components/livelook/Loading";
 
 // Define the type for a clothing item
 interface ClothingItem {
@@ -22,6 +23,8 @@ interface LiveLookContextType {
   setBottomClothing: (clothing: ClothingItem | null) => void;
   uploadedPhoto: string | null;
   setUploadedPhoto: (photo: string | null) => void;
+  isGenerating: boolean;
+  generateImage: () => Promise<void>;
 }
 
 // Create the context with a default value
@@ -46,6 +49,25 @@ export default function LiveLook() {
   const [topClothing, setTopClothing] = useState<ClothingItem | null>(null);
   const [bottomClothing, setBottomClothing] = useState<ClothingItem | null>(null);
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Generate function
+  const generateImage = async () => {
+    if (!uploadedPhoto || !topClothing || !bottomClothing) {
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      // TODO: Add actual API call here
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulated delay
+      goToStep(2);
+    } catch (error) {
+      console.error('Failed to generate image:', error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   // Handle navigation between steps
   const goToStep = (newStep: number) => {
@@ -71,7 +93,9 @@ export default function LiveLook() {
     setTopClothing,
     setBottomClothing,
     uploadedPhoto,
-    setUploadedPhoto
+    setUploadedPhoto,
+    isGenerating,
+    generateImage
   };
 
   // Render the appropriate component based on the current step
@@ -82,6 +106,8 @@ export default function LiveLook() {
       case 1:
         return <UploadPhoto onBack={goBack} onNext={() => goToStep(2)} />;
       case 2:
+        return <Loading onBack={goBack} onNext={() => goToStep(3)}/>;
+      case 3:
         return <Generated onBack={goBack} onFinish={goToHome} />;
       default:
         return <SelectClothes onBack={goBack} onNext={() => goToStep(1)} />;

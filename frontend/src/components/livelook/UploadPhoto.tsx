@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useRef } from "react";
 import UploadBox from "@/components/onboarding/steps/upload/UploadBox";
@@ -7,6 +8,7 @@ import {
 } from "@/components/onboarding/steps/upload/UploadIcons";
 import { ArrowLeft } from "lucide-react";
 import { useLiveLook } from "@/app/livelook/page";
+import Image from "next/image";
 
 interface UploadPhotoProps {
   onBack: () => void;
@@ -14,7 +16,7 @@ interface UploadPhotoProps {
 }
 
 export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
-  const { uploadedPhoto, setUploadedPhoto } = useLiveLook();
+  const { uploadedPhoto, setUploadedPhoto, generateImage, isGenerating } = useLiveLook();
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +30,6 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setUploadedPhoto(imageUrl);
-      onNext();
     }
   };
 
@@ -57,23 +58,35 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
       </p>
 
       {uploadedPhoto ? (
-        <div className="mb-8">
-          <img
-            src={uploadedPhoto}
-            alt="User selfie"
-            className="w-64 h-64 object-cover rounded-lg border-2"
-          />
+        <div className="flex flex-col items-center">
+          <div className="mb-8">
+            <div className="relative w-64 h-64">
+              <Image
+                src={uploadedPhoto}
+                alt="User selfie"
+                fill
+                className="object-cover rounded-lg border-2"
+              />
+            </div>
+            <button
+              onClick={handleRemoveImage}
+              className="mt-2 text-prim-dark underline"
+            >
+              Remove image
+            </button>
+          </div>
           <button
-            onClick={handleRemoveImage}
-            className="mt-2 text-prim-dark underline"
+            onClick={generateImage}
+            disabled={isGenerating}
+            className="px-8 py-4 bg-[#3E3A66] text-white rounded-md hover:bg-[#2E2A56] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Remove image
+            {isGenerating ? "Generating..." : "Generate"}
           </button>
         </div>
       ) : (
         <>
           <UploadBox
-            title="Upload Image"
+            title=""
             subtitle=""
             icon={<UploadFileIcon />}
             onSelectFiles={handleSelectFiles}

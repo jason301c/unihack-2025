@@ -319,7 +319,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
           onClick={onNext}
           disabled={!(topClothing || bottomClothing)}
           className={`absolute left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-xl shadow-md flex items-center gap-2 ${
-            topClothing && bottomClothing
+            topClothing || bottomClothing
               ? "bg-prim-darkest text-prim-lightest hover:opacity-90 transition"
               : "bg-gray-300 text-gray-600 cursor-not-allowed"
           }`}
@@ -337,7 +337,7 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
 
       {/* Selection guidance text */}
       {selectionType && (
-        <div className="w-full text-center text-prim-darkest font-medium py-2 bg-prim-lightest bg-opacity-50">
+        <div className="w-full text-center text-prim-darkest font-medium py-2 bg-green-100 bg-opacity-50">
           {selectionType === "tops" ? "Select a top first" : "Now select a bottom"}
         </div>
       )}
