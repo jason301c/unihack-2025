@@ -22,34 +22,26 @@ export default function SelectClothes({ onBack, onNext }: SelectClothesProps) {
           <ArrowLeft className="w-6 h-6" />
         </button>
 
-        {/* Button to open bottom sheet */}
+        {/* Button to try it on (go next) */}
         <button
-          onClick={() => setIsOpen(true)}
-          className="absolute left-1/2 transform -translate-x-1/2 bg-prim-darkest text-white px-4 py-2 rounded-full shadow-md hover:opacity-90 transition"
+          onClick={onNext}
+          className="absolute left-1/2 transform -translate-x-1/2 bg-prim-darkest text-prim-lightest px-4 py-2 rounded-xl shadow-md hover:opacity-90 transition flex items-center gap-2"
         >
-          Try it on!
+          Try it on yourself! <Image src={'stars.svg'} alt="Icon" width={24} height={24} className="filter invert" />
         </button>
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden px-10">
-        <Image
-          src={ILLUSTRATIONS.mannequin}
-          alt="Mannequin"
-          width={500}
-          height={800}
-          className="w-full h-full object-fill object-top"
-          priority
-        />
-      </div>
-
-      {/* Next button */}
-      <button 
-        onClick={onNext}
-        className="fixed bottom-20 right-4 bg-prim-darkest text-white px-6 py-3 rounded-full shadow-md hover:opacity-90 transition"
-      >
-        Next
-      </button>
+    <div className="flex flex-1 overflow-hidden px-10">
+      <Image
+        src={ILLUSTRATIONS.mannequin}
+        alt="Mannequin"
+        width={500}
+        height={800}
+        className="w-full h-full object-fill object-top"
+        priority
+      />
+    </div>
 
       {/* Reopen Button - Fixed at Bottom */}
       {!isOpen && (

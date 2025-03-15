@@ -19,7 +19,7 @@ export default function LiveLook() {
     if (step > 0) {
       goToStep(step - 1);
     } else {
-      router.push('/'); // Go to home if at first step
+      router.push('/home'); // Go to home if at first step
     }
   };
 
