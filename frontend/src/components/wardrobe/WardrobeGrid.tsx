@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import "@/components/wardrobe/ShakeAnimation.css";
@@ -17,16 +17,29 @@ type WardrobeGridProps = {
   items: ClothingItem[];
   onRemoveItem: (id: string) => void;
   onAddItem: () => void;
-  isEditing: boolean; // Controls whether remove buttons are shown
 };
 
 export default function WardrobeGrid({
   items,
   onRemoveItem,
   onAddItem,
-  isEditing,
 }: WardrobeGridProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
+    <div>
+      <header className="flex items-center justify-between mb-6">
+        <div className="text-lg font-semibold text-black">My Wardrobe</div>
+        <Button
+          variant="secondary"
+          className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"
+          onClick={() => setIsEditing(!isEditing)}
+        >
+          {isEditing ? "Done" : "Edit"}
+        </Button>
+      </header>
+      
+    
     <div className="grid grid-cols-3 gap-4 justify-items-center">
       {items.map((item: ClothingItem) => (
         <div key={item.id} className={`relative w-26 h-26 item-container ${isEditing ? "shake" : ""}`}>
@@ -50,12 +63,13 @@ export default function WardrobeGrid({
       {/* Plus tile to add a new item */}
       <Button
         onClick={onAddItem}
-        className="relative w-26 h-26 border-2 border-dashed border-gray-300 
+        className="relative w-26 h-26 border-2 border-dashed border-black 
                    rounded-lg flex items-center justify-center
-                   text-white hover:border-white transition-colors"
+                   text-black hover:border-zinc-800 transition-colors bg-white hover:bg-gray-100"
       >
         <Plus className="w-10 h-10" />
       </Button>
+    </div>
     </div>
   );
 }
