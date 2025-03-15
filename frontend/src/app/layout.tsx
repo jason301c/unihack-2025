@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 // Initialize Roboto font with desired subsets and weights
 const roboto = Roboto({
@@ -23,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={roboto.className}>
-      <UserProvider>
-        <body>{children}</body>
-      </UserProvider>
+      <body>{children}</body>
     </html>
   );
 }
