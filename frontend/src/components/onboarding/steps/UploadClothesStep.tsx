@@ -55,16 +55,16 @@ const UploadClothesStep: React.FC = () => {
           </button>
         </div>
       ) : (
-        <>
+        <div className="w-full max-w-md flex flex-col items-center">
           <UploadBox
-            title="Upload Image"
+            title=""
             subtitle=""
             icon={<UploadFileIcon />}
             onSelectFiles={handleSelectFiles}
             buttonText="Upload Image"
           />
 
-          <div className="flex items-center my-6">
+          <div className="flex items-center my-6 w-full">
             <hr className="flex-grow border-t border-gray-300" />
             <span className="mx-4 text-lg text-prim-darkest">or</span>
             <hr className="flex-grow border-t border-gray-300" />
@@ -72,12 +72,12 @@ const UploadClothesStep: React.FC = () => {
 
           <button
             onClick={handleOpenCamera}
-            className="flex items-center gap-2 px-4 py-4 bg-[#3E3A66] text-white rounded-md hover:bg-[#2E2A56] transition-all"
+            className="w-full max-w-md flex items-center justify-center gap-2 px-4 py-6 bg-[#2A2646] text-white rounded-lg hover:bg-[#1A1636] transition-all"
           >
-            <CameraIcon className="text-white mb-0" />
+            <CameraIcon className="text-white" />
             <span>Open Camera & Take Photo</span>
           </button>
-        </>
+        </div>
       )}
 
       {/* Hidden file inputs */}

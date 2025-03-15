@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 
-export const UploadFileIcon: React.FC<{ className?: string }> = ({ className = "text-gray-400 mb-4" }) => (
+export const UploadFileIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="48" 
@@ -20,7 +20,7 @@ export const UploadFileIcon: React.FC<{ className?: string }> = ({ className = "
   </svg>
 );
 
-export const UploadPhotoIcon: React.FC<{ className?: string }> = ({ className = "text-gray-400 mb-4" }) => (
+export const UploadPhotoIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="48" 
@@ -41,7 +41,7 @@ export const UploadPhotoIcon: React.FC<{ className?: string }> = ({ className = 
   </svg>
 );
 
-export const CameraIcon: React.FC<{ className?: string }> = ({ className = "text-gray-400 mb-4" }) => (
+export const CameraIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="24" 

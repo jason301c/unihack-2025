@@ -15,7 +15,7 @@ const ClothingButton: React.FC<ClothingButtonProps> = ({ label }) => {
 const ClothingTypeStep: React.FC = () => {
   return (
     <div className="flex flex-col items-center h-[70vh] px-6 py-8">
-      <h1 className="text-4xl pr-12 text-prim-darkest font-semibold mb-12 mt-6">What 
+      <h1 className="text-4xl pr-12 text-prim-darkest font-medium mb-12 mt-6">What 
         <span className="text-prim-dark"> type</span> of <span className="text-prim-dark"> clothing </span> 
         would you like to explore?</h1>
       
