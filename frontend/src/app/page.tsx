@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Logo } from "@/components/base-screen/Logo";
 import  { AuthForm } from "@/components/base-screen/AuthForm";
