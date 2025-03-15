@@ -1,5 +1,7 @@
 import ILLUSTRATIONS from "../../../constants/illustrations";
 import { User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,23 +18,31 @@ export default function Home() {
         <h2 className="text-2xl font-semibold self-start mb-2">Actions</h2>
 
         {/* Action Buttons */}
-        <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-blue-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
-          <span>Your Wardrobe</span>
-          <img
-            src={ILLUSTRATIONS.clotheshanger}
-            alt="Icon"
-            className="h-24 object-cover"
-          />
-        </button>
+        <Link href="/wardrobe" className="w-full">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-blue-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+            <span>Your Wardrobe</span>
+            <Image
+              src={ILLUSTRATIONS.clotheshanger}
+              alt="Icon"
+              width={96}
+              height={96}
+              className="h-24 object-cover"
+            />
+          </button>
+        </Link>
 
-        <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-green-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
-          <span>Live Look</span>
-          <img
-            src={ILLUSTRATIONS.mirrorlady}
-            alt="Icon"
-            className="h-24 object-cover"
-          />
-        </button>
+        <Link href="/livelook" className="w-full">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-green-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+            <span>Live Look</span>
+            <Image
+              src={ILLUSTRATIONS.mirrorlady}
+              alt="Icon"
+              width={96}
+              height={96}
+              className="h-24 object-cover"
+            />
+          </button>
+        </Link>
       </section>
     </div>
   );
