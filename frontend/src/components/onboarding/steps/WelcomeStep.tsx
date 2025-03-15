@@ -1,22 +1,32 @@
 import ILLUSTRATIONS from "../../../../constants/illustrations";
 import Image from "next/image";
 import Link from "next/link";
+import { auth0 } from "@/lib/auth0";
 
-export default function Home() {
+export default async function Home() {
+    // Get user 
+    const session = await auth0.getSession();
+    const name = session?.user.name?.slice(0, 10);
+
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
       {/* Text Section remains unchanged */}
-      <div className="flex flex-col text-left w-full px-6 mt-8">
-        <h1 className="text-3xl font-regular mb-6 mt-24 text-prim-darkest">
-          Welcome to{" "}
-          <span className="text-prim-dark">
-            <br /> Weave.
-          </span>
-        </h1>
+      <div className="flex flex-col text-left w-full px-6 mt-8 pt-20">
+        { name && (
+          <p className="text-3xl font-regular text-prim-darkest mb-8">
+            Hi, {name}.
+          </p>
+        )}
+      <h1 className="text-5xl font-semibold mb-6 text-prim-darkest">
+        Welcome to{" "}
+        <span className="text-prim-dark">
+        <br /> Weave.
+        </span>
+      </h1>
 
-        <p className="text-3xl font-regular text-prim-darkest">
-          The app designed <br /> to make fashion <br /> simple.
-        </p>
+      <p className="text-2xl font-regular text-prim-darkest">
+        The app designed <br /> to make fashion <br /> simple.
+      </p>
       </div>
 
       {/* Spacer to push content to bottom */}

@@ -12,6 +12,7 @@ const AuthPage: React.FC = () => {
     secondary: "text-white bg-prim-darkest hover:bg-slate-700",
   };
 
+  {/* DONE, DO NOT TOUCH */}
   return (
     <main className="flex flex-col bg-neutral-50 min-h-screen">
       {/* Logo Header */}
@@ -54,7 +55,7 @@ const AuthPage: React.FC = () => {
             aria-label="Authentication options"
           >
             {/* Primary action: Log in */}
-            <Link href="/api/auth/login">
+            <Link href="/auth/login?returnTo=/onboarding">
               <div className={`${baseStyles} ${variantStyles.primary}`} aria-label="Login with email">
                 Log in
               </div>

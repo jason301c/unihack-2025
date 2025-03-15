@@ -14,6 +14,8 @@ interface OnboardingStepPageProps {
 export default async function OnboardingStepPage({
   searchParams,
 }: OnboardingStepPageProps) {
+
+  // Await the search params to get the step number
   const params = await searchParams;
   const stepNumber = parseInt(params.step, 10);
 
