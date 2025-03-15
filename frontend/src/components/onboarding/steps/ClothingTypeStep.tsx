@@ -1,12 +1,24 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 interface ClothingButtonProps {
   label: string;
 }
 
 const ClothingButton: React.FC<ClothingButtonProps> = ({ label }) => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handlePress = () => {
+    setIsPressed(!isPressed);
+  };
+
   return (
-    <button className="bg-prim-darkest text-white rounded-lg p-4 w-full text-left text-lg hover:bg-prim-neutral hover:text-prim-darkest">
+    <button
+      onClick={handlePress}
+      className={`${
+        isPressed ? "bg-prim-neutral text-prim-darkest" : "bg-prim-darkest text-white"
+      } rounded-lg p-4 w-full text-left text-lg hover:bg-prim-neutral hover:text-prim-darkest`}
+    >
       {label}
     </button>
   );
