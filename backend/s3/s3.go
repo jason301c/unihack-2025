@@ -7,8 +7,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -19,30 +17,40 @@ type Image struct {
 	URL string `json:"url"`
 }
 
-var (
-	bucketName = "image-pre-raw"
-	region     = "ap-southeast-2"
-)
+// Config struct for holding AWS credentials and config
+type Config struct {
+	AccessKey string
+	SecretKey string
+	Region    string
+	Bucket    string
+}
+
+// DefaultConfig initializes the default configuration
+func DefaultConfig() Config {
+	return Config{
+		Region: "ap-southeast-2",
+		Bucket: "image-pre-raw",
+	}
+}
 
 // ListImages fetches the images from the S3 bucket and returns their URLs
 func ListImages() ([]Image, error) {
-	// Load environment variables from .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	// Initialize the configuration struct
+	config := DefaultConfig()
 
 	// Get AWS credentials from environment variables
-	accessKey := os.Getenv("AWS_ACCESS_KEY_ID")
-	secretKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
-	if accessKey == "" || secretKey == "" {
+	config.AccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
+	config.SecretKey = os.Getenv("AWS_SECRET_ACCESS_KEY")
+
+	// Check if the credentials are available
+	if config.AccessKey == "" || config.SecretKey == "" {
 		return nil, fmt.Errorf("AWS credentials not found in environment variables")
 	}
 
-	// Create a new session in the AWS region using the credentials from environment variables
+	// Create a new session in the AWS region using the credentials from the config
 	sess, err := session.NewSession(&aws.Config{
-		Region:      aws.String(region),
-		Credentials: credentials.NewStaticCredentials(accessKey, secretKey, ""),
+		Region:      aws.String(config.Region),
+		Credentials: credentials.NewStaticCredentials(config.AccessKey, config.SecretKey, ""),
 	})
 	if err != nil {
 		return nil, err
@@ -53,7 +61,7 @@ func ListImages() ([]Image, error) {
 
 	// List objects in the S3 bucket
 	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{
-		Bucket: aws.String(bucketName),
+		Bucket: aws.String(config.Bucket),
 	})
 	if err != nil {
 		return nil, err
@@ -70,7 +78,7 @@ func ListImages() ([]Image, error) {
 			continue
 		}
 
-		imageURL := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, trimmedKey)
+		imageURL := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", config.Bucket, config.Region, trimmedKey)
 		images = append(images, Image{URL: imageURL})
 	}
 
