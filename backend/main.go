@@ -7,6 +7,7 @@ import (
 	"unihack-2025/backend/db"
 	"unihack-2025/backend/fetcher"
 	"unihack-2025/backend/googlescrape"
+	"unihack-2025/backend/s3"
 
 	"github.com/gin-gonic/gin"
 )
@@ -47,5 +48,9 @@ func main() {
 	// Fetch random clothes endpoint
 	r.GET("/fetch", fetcher.HandleFetch)
 
+	// New endpoint to fetch all S3 images
+	r.GET("/api/images", s3.ListS3ImagesHandler)
+
+	// Start the server
 	r.Run(":8080")
 }
