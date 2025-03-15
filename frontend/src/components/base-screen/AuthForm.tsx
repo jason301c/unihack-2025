@@ -3,6 +3,7 @@
 
 import React from "react";
 import { Button } from "./AuthButton";
+import Link from "next/link";
 
 export const AuthForm: React.FC = () => {
   return (
@@ -22,13 +23,12 @@ export const AuthForm: React.FC = () => {
         role="group"
         aria-label="Authentication options"
       >
-        <Button
-          variant="primary"
-          onClick={() => {}}
-          aria-label="Sign up with email"
-        >
-          Sign up with email
-        </Button>
+        <Link href="/api/auth/login">
+          <Button variant="primary" aria-label="Login with email">
+            Login
+          </Button>
+        </Link>
+
         <Button
           variant="secondary"
           onClick={() => (window.location.href = "/onboarding")}
