@@ -22,26 +22,40 @@ interface WardrobeProps {
 }
 
 export default function Wardrobe({ isOpen, onOpenChange }: WardrobeProps) {
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
-
-  // Static wardrobe items
-  const tops: ClothingItem[] = [
-    { id: "1", name: "T-Shirt", imageUrl: "/images/tshirt.png" },
-    { id: "2", name: "Jacket", imageUrl: "/images/jacket.png" },
-    { id: "3", name: "Hoodie", imageUrl: "/images/hoodie.png" },
-  ];
-
-  const bottoms: ClothingItem[] = [
-    { id: "4", name: "Jeans", imageUrl: "/images/jeans.png" },
-    { id: "5", name: "Shorts", imageUrl: "/images/shorts.png" },
-    { id: "6", name: "Joggers", imageUrl: "/images/joggers.png" },
-  ];
+  const [selectedValue, setSelectedValue] = useState<string | null>("tops");
+  const [items, setItems] = useState<ClothingItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setSelectedValue("tops");
-  }, []);
+    const fetchImages = async () => {
+      setLoading(true);
+      setError(null);
 
-  if (selectedValue === null) return null;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+      try {
+        const res = await fetch(`${apiUrl}/api/images`);
+        if (!res.ok) throw new Error("Failed to fetch images");
+
+        const data = await res.json();
+        setItems(
+          data.map((img: { url: string }, index: number) => ({
+            id: index.toString(),
+            name: `Item ${index + 1}`,
+            imageUrl: img.url,
+          }))
+        );
+      } catch (err) {
+        console.error("Error fetching images:", err);
+        setError("Could not load wardrobe items. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   return (
     <div className="bg-prim-darkest">
@@ -62,47 +76,49 @@ export default function Wardrobe({ isOpen, onOpenChange }: WardrobeProps) {
             </div>
           </SheetHeader>
 
-            {/* Wardrobe Content */}
-            <div className="flex flex-col h-full relative px-4">
-
+          {/* Wardrobe Content */}
+          <div className="flex flex-col h-full relative px-4">
             {/* Wardrobe Grid */}
             <div className="grid grid-cols-3 gap-4 justify-items-center mt-6 py-4 w-full">
-              {(selectedValue === "tops" ? tops : bottoms).map((item) => (
-              <div key={item.id} className="relative w-24 h-24">
-                <Image
-                src={item.imageUrl}
-                alt={item.name}
-                width={96}
-                height={96}
-                className="rounded-md object-cover"
-                />
-              </div>
-              ))}
+              {loading && <p className="text-center">Loading wardrobe...</p>}
+              {error && <p className="text-red-500 text-center">{error}</p>}
+              {!loading &&
+                items.map((item) => (
+                  <div key={item.id} className="relative w-24 h-24">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.name}
+                      width={96}
+                      height={96}
+                      className="rounded-md object-cover"
+                    />
+                  </div>
+                ))}
             </div>
 
             {/* Segmented Control for "Tops" & "Bottoms" */}
             <div className="absolute bottom-8 left-0 right-0 flex justify-center">
               <div className="flex bg-gray-200 rounded-full w-[300px]">
-              <button
-                onClick={() => setSelectedValue("tops")}
-                className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
-                selectedValue === "tops"
-                  ? "bg-prim-dark text-white shadow-md"
-                  : "text-prim-darkest"
-                }`}
-              >
-                Tops
-              </button>
-              <button
-                onClick={() => setSelectedValue("bottoms")}
-                className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
-                selectedValue === "bottoms"
-                  ? "bg-prim-dark text-white shadow-md"
-                  : "text-prim-darkest"
-                }`}
-              >
-                Bottoms
-              </button>
+                <button
+                  onClick={() => setSelectedValue("tops")}
+                  className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
+                    selectedValue === "tops"
+                      ? "bg-prim-dark text-white shadow-md"
+                      : "text-prim-darkest"
+                  }`}
+                >
+                  Tops
+                </button>
+                <button
+                  onClick={() => setSelectedValue("bottoms")}
+                  className={`flex-1 px-4 py-2 rounded-full text-center transition-all ${
+                    selectedValue === "bottoms"
+                      ? "bg-prim-dark text-white shadow-md"
+                      : "text-prim-darkest"
+                  }`}
+                >
+                  Bottoms
+                </button>
               </div>
             </div>
           </div>
