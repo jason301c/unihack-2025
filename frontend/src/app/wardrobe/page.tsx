@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
-import {ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
@@ -17,42 +17,48 @@ type ClothingItem = {
 
 export default function Wardrobe() {
   const router = useRouter();
-  
-  const [items, setItems] = useState<ClothingItem[]>([
-    {
-      id: "1",
-      name: "Sample Shirt",
-      imageUrl: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
-    },
-    {
-      id: "2",
-      name: "Sample Pants",
-      imageUrl: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
-    },
-    {
-      id: "3",
-      name: "Sample Pants",
-      imageUrl: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
-    },
-    {
-      id: "4",
-      name: "Sample Pants",
-      imageUrl: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
-    },
-  ]);
 
+  const [items, setItems] = useState<ClothingItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Refs for hidden file inputs
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  // -----------------------------
-  //  ADD / REMOVE ITEM LOGIC
-  // -----------------------------
-  // Simple placeholder for adding a new item
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || ""
+
+        const res = await fetch(`${apiUrl}/api/images`);
+        if (!res.ok) throw new Error("Failed to fetch images");
+
+        const data = await res.json();
+        setItems(
+          data.map((img: { url: string }, index: number) => ({
+            id: index.toString(),
+            name: `Item ${index + 1}`,
+            imageUrl: img.url,
+          }))
+        );
+      } catch (err) {
+        console.error("Error fetching images:", err);
+        setError("Could not load wardrobe items. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  // Add item logic (triggered when uploading a new image)
   const handleAddItem = () => {
     setIsModalOpen(true);
   };
@@ -69,7 +75,6 @@ export default function Wardrobe() {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      // In a real app, you might want to push the item to your state or upload it
       const newItem: ClothingItem = {
         id: Math.random().toString(36).substring(2),
         name: file.name,
@@ -89,18 +94,14 @@ export default function Wardrobe() {
     fileInputRef.current?.click();
   };
 
-   // Trigger hidden input for "Upload from Camera Roll"
-   const handleBrowseCatalogue = () => {
-    router.push("/catalogue")
+  // Trigger hidden input for "Browse Catalogue"
+  const handleBrowseCatalogue = () => {
+    router.push("/catalogue");
   };
 
-  // -----------------------------
-  //  RENDER
-  // -----------------------------
   return (
     <main className="min-h-screen bg-black text-white px-8 py-6 flex flex-col">
       {/* Top bar */}
-      {/* Left side: Back arrow + Title */}
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
@@ -113,10 +114,19 @@ export default function Wardrobe() {
       </div>
       <header className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">My Wardrobe</h2>
-        <Button variant="secondary" className="hover:bg-gray-200 rounded-3xl px-6" style={{background: COLORS.secondary}}onClick={() => setIsEditing(!isEditing)}>
-        {isEditing ? "Done" : "Edit"}
+        <Button
+          variant="secondary"
+          className="hover:bg-gray-200 rounded-3xl px-6"
+          style={{ background: COLORS.secondary }}
+          onClick={() => setIsEditing(!isEditing)}
+        >
+          {isEditing ? "Done" : "Edit"}
         </Button>
       </header>
+
+      {/* Loading or Error States */}
+      {loading && <p className="text-center">Loading wardrobe...</p>}
+      {error && <p className="text-red-500 text-center">{error}</p>}
 
       {/* Check if wardrobe is empty or not */}
       {items.length === 0 ? (
@@ -127,21 +137,22 @@ export default function Wardrobe() {
         />
       ) : (
         <WardrobeGrid
-        items={items}
-        onRemoveItem={handleRemoveItem}
-        onAddItem={handleAddItem}
-        isEditing={isEditing}
-      />
+          items={items}
+          onRemoveItem={handleRemoveItem}
+          onAddItem={handleAddItem}
+          isEditing={isEditing}
+        />
       )}
 
-      {isModalOpen &&
+      {isModalOpen && (
         <UploadModal
-        onClose={() => setIsModalOpen(false)}
-        onUploadFromRoll={handleUploadFromRoll}
-        onTakePhoto={handleOpenCamera}
-        onBrowseCatalogue={handleBrowseCatalogue}
-      />
-      }
+          onClose={() => setIsModalOpen(false)}
+          onUploadFromRoll={handleUploadFromRoll}
+          onTakePhoto={handleOpenCamera}
+          onBrowseCatalogue={handleBrowseCatalogue}
+        />
+      )}
+
       {/* Hidden inputs for camera & file upload */}
       <input
         ref={cameraInputRef}
