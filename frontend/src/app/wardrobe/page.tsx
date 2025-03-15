@@ -34,7 +34,9 @@ export default function Wardrobe() {
         setLoading(true);
         setError(null);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/images`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || ""
+
+        const res = await fetch(`${apiUrl}/api/images`);
         if (!res.ok) throw new Error("Failed to fetch images");
 
         const data = await res.json();
