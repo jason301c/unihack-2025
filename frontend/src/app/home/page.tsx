@@ -2,14 +2,41 @@ import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ILLUSTRATIONS from "../../../constants/illustrations";
+import { auth0 } from "@/lib/auth0";
 
-export default function Home() {
+const UserMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+  return (
+    <div className="relative">
+      {isLoggedIn ? (
+        <div className="flex items-center gap-2">
+          <User className="w-8 h-8 cursor-pointer" />
+          <a 
+            href="/auth/logout" 
+            className="text-sm text-prim-darkest hover:text-prim-neutral"
+          >
+            Logout
+          </a>
+        </div>
+      ) : (
+        <Link href="/api/auth/login">
+          <User className="w-8 h-8 cursor-pointer" />
+        </Link>
+      )}
+    </div>
+  );
+};
+
+export default async function Home() {
+  const session = await auth0.getSession();
+  const name = session?.user.name.slice(0,10) || "Guest";
+  const isLoggedIn = !!session;
+
   return (
     <div className="flex flex-col h-screen bg-prim-lightest ">
       {/* Header */}
       <header className="flex mt-[5vh] justify-between items-center p-6 text-prim-darkest">
-        <h1 className="text-2xl font-semibold">👋 Hi Zahir!</h1>
-        <User className="w-8 h-8 cursor-pointer" />
+        <h1 className="text-3xl font-semibold">👋 Hi {name}!</h1>
+        <UserMenu isLoggedIn={isLoggedIn} />
       </header>
 
       {/* Actions Section */}
