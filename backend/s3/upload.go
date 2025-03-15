@@ -47,7 +47,7 @@ func UploadFileHandler(c *gin.Context) {
 
 	// Upload the file to S3
 	_, err = svc.PutObject(&s3.PutObjectInput{
-		Bucket:      aws.String("image-pre-raw"), // Your S3 bucket name
+		Bucket:      aws.String("src-img-unihack"), // Your S3 bucket name
 		Key:         aws.String(fileName),         // S3 object key (filename)
 		Body:        file,                         // File body to upload
 		ContentType: aws.String("application/octet-stream"),
