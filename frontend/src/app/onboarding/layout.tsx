@@ -29,7 +29,7 @@ export default function OnboardingLayout({
   }, [pathname, searchParams]);
 
   // The total number of steps in the onboarding process
-  const totalSteps = 4;
+  const totalSteps = 5;
   
   const goToNextStep = () => {
     const nextStep = currentStep + 1;
