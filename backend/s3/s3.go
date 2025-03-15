@@ -29,7 +29,7 @@ type Config struct {
 func DefaultConfig() Config {
 	return Config{
 		Region: "ap-southeast-2",
-		Bucket: "image-pre-raw",
+		Bucket: "dest-img-unihack",
 	}
 }
 
