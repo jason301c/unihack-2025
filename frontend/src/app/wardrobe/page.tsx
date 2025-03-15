@@ -34,7 +34,7 @@ export default function Wardrobe() {
         setLoading(true);
         setError(null);
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || ""
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
         const res = await fetch(`${apiUrl}/api/images`);
         if (!res.ok) throw new Error("Failed to fetch images");
@@ -71,16 +71,41 @@ export default function Wardrobe() {
   // -----------------------------
   //  PHOTO / FILE UPLOAD LOGIC
   // -----------------------------
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      const newItem: ClothingItem = {
-        id: Math.random().toString(36).substring(2),
-        name: file.name,
-        imageUrl,
-      };
-      setItems((prev) => [...prev, newItem]);
+      // Create FormData to send the file
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+        // Send file to backend for upload to S3
+        const res = await fetch(`${apiUrl}/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) throw new Error("Failed to upload image");
+
+        // Assuming the server responds with the URL of the uploaded image
+        const data = await res.json();
+        const newItem: ClothingItem = {
+          id: Math.random().toString(36).substring(2),
+          name: file.name,
+          imageUrl: data.url, // Assuming the response contains the URL
+        };
+        setItems((prev) => [...prev, newItem]);
+      } catch (err) {
+        console.error("Error uploading file:", err);
+        setError("Failed to upload image. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
