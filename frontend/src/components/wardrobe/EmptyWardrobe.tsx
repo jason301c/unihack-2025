@@ -17,36 +17,37 @@ export default function EmptyWardrobe({
 }: EmptyWardrobeProps) {
   return (
     <div className="flex-grow flex flex-col items-center ">
-      <p className="text-white font-xs mb-8 font-thin">
+      <p className="text-black font-xs mb-8 font-thin">
         Oops... No items found. Please choose one of the options below to add
         items.
       </p>
-      <div className="relative w-100 h-100 mb-8 mx-auto rounded-md">
-        <Image
-          src={`${ILLUSTRATIONS.shrugMan}`}
-          alt="No items placeholder"
-          fill
-          className="object-contain"
-        />
-      </div>
+      <div className="w-100 bottom-[180px] left-0 right-0 z-0 flex justify-center">
+          <Image
+            width={200}
+            height={200}
+            src={ILLUSTRATIONS.shrugMan}
+            alt="No looks"
+            className="object-contain w-auto max-h-[40vh]"
+          />
+        </div>
       <div className="space-y-5 w-full max-w-sm">
         <Button
           variant="secondary"
-          className="w-full rounded-3xl py-6"
+          className="text-white w-full rounded-3xl py-6 bg-prim-darkest hover:text-black hover:bg-prim-light"
           onClick={onUploadFromRoll}
         >
           Upload from Camera Roll
         </Button>
         <Button
           variant="secondary"
-          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl py-6"
+          className="w-full bg-prim-darkest hover:bg-prim-light hover:text-black text-white rounded-3xl py-6"
           onClick={onTakePhoto}
         >
           Take Photo
         </Button>
         <Button
           variant="secondary"
-          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-3xl py-6"
+          className="w-full bg-prim-darkest hover:bg-prim-light hover:text-black text-white rounded-3xl py-6"
           onClick={onBrowseCatalogue}
         >
           Browse Catalogue

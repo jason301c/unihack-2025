@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
 import UploadModal from "@/components/wardrobe/UploadModal";
-import COLORS from "../../../constants/colors";
 
 type ClothingItem = {
   id: string;
@@ -125,24 +124,23 @@ export default function Wardrobe() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white px-8 py-6 flex flex-col">
+    <main className="min-h-screen min-v-screen text-white px-8 py-6 flex flex-col">
       {/* Top bar */}
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
           size="icon"
-          className="text-white"
+          className="text-black"
           onClick={() => router.back()} // or any other navigation
         >
           <ArrowLeft className="h-6 w-6" />
         </Button>
       </div>
       <header className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold">My Wardrobe</h2>
+        <h2 className="text-lg font-semibold text-black">My Wardrobe</h2>
         <Button
           variant="secondary"
-          className="hover:bg-gray-200 rounded-3xl px-6"
-          style={{ background: COLORS.secondary }}
+          className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"
           onClick={() => setIsEditing(!isEditing)}
         >
           {isEditing ? "Done" : "Edit"}

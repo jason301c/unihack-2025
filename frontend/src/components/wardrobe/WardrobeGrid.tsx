@@ -50,9 +50,9 @@ export default function WardrobeGrid({
       {/* Plus tile to add a new item */}
       <Button
         onClick={onAddItem}
-        className="relative w-26 h-26 border-2 border-dashed border-gray-300 
+        className="relative w-26 h-26 border-2 border-dashed border-black 
                    rounded-lg flex items-center justify-center
-                   text-white hover:border-white transition-colors"
+                   text-black hover:border-zinc-800 transition-colors bg-white hover:bg-gray-100"
       >
         <Plus className="w-10 h-10" />
       </Button>
