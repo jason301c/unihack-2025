@@ -1,6 +1,7 @@
 'use client';
 
 import { QueryResult } from "@/app/catalogue/page";
+import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 interface ItemsSectionProps {
@@ -8,7 +9,6 @@ interface ItemsSectionProps {
   images: QueryResult['images'],
 }
 
-// Remember to add brand name later
 export function ItemsSection({ query, images }: ItemsSectionProps) {
   return (
     <div className="space-y-2">
@@ -25,8 +25,18 @@ export function ItemsSection({ query, images }: ItemsSectionProps) {
                 alt={`Image for ${query}`}
                 width={300}
                 height={300}
-                className="object-cover"
+                className="object-contain"
+                placeholder="blur"
+                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImcxIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTgxODFiIiAvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMjAyMDI1IiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MTgxYiIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNnMSkiPjxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBmcm9tPSIwIDEwMCAxMDAiIHRvPSIzNjAgMTAwIDEwMCIgZHVyPSI0cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz48L3JlY3Q+PC9zdmc+"
+                loading="lazy"
               />
+                {image.brand && (
+                  <Badge
+                    className="absolute bottom-2 right-2 bg-black/70 hover:bg-black/90 transition-colors duration-200 text-white font-sm px-2 py-1 text-sm rounded-sm shadow-lg backdrop-blur-sm"
+                  >
+                    {image.brand}
+                  </Badge>
+                )}
             </div>
           </div>
         ))}
