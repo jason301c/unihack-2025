@@ -1,29 +1,71 @@
-import React from 'react';
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { ItemsSection } from "./choose-items/ItemsSection";
+import React from "react";
 
-const ChooseItemsStep: React.FC = () => {
+export interface QueryResult {
+  query: string;
+  images: [
+    {
+      link: string;
+      brand?: string;
+    }
+  ];
+}
+
+async function fetchItems(): Promise<QueryResult[]> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  if (!apiUrl) {
+    throw new Error("API URL is not defined");
+  }
+
+  const response = await fetch(apiUrl + "/fetch");
+  const result = (await response.json()) as QueryResult[];
+  return result;
+}
+
+function HeaderText() {
   return (
-    <div className="flex flex-col items-center h-[70vh] px-6 py-8">
-      <h2 className="text-2xl font-bold text-center mb-6">Choose items you like</h2>
-      
-      <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-        {/* Sample clothing items - these would typically come from an API or state */}
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div 
-            key={index}
-            className="aspect-square bg-gray-100 rounded-lg overflow-hidden hover:ring-2 hover:ring-prim-darkest cursor-pointer transition-all"
-          >
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="text-gray-500">Item {index + 1}</span>
-            </div>
-          </div>
+    <Card className="border-none bg-transparent shadow-none w-full">
+      <CardHeader className="px-0 py-0">
+        <CardTitle
+          data-slot="page-title"
+          className="text-4xl text-prim-darkest leading-tight"
+        >
+          Choose items
+        </CardTitle>
+        <CardTitle
+          data-slot="page-subtitle"
+          className="text-4xl text-prim-darkest leading-tight -mt-2"
+        >
+          from the <span className="text-prim-dark">brands</span>
+        </CardTitle>
+        <CardTitle
+          data-slot="page-subtitle"
+          className="text-4xl text-prim-darkest leading-tight -mt-2"
+        >
+          you <span className="text-prim-dark">love</span>.
+        </CardTitle>
+      </CardHeader>
+    </Card>
+  );
+}
+
+export default async function ChooseItemsStep() {
+  const items = await fetchItems();
+
+  return (
+    <div className="px-6">
+      <HeaderText />
+      <div className="flex flex-col gap-4">
+        {items.map((item) => (
+          <ItemsSection
+            key={item.query}
+            query={item.query}
+            images={item.images}
+          />
         ))}
       </div>
-      
-      <p className="text-center text-gray-500 mt-6">
-        Tap on the items that match your style preferences
-      </p>
     </div>
   );
-};
-
-export default ChooseItemsStep;
+}

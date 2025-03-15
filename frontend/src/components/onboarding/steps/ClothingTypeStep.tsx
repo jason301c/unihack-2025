@@ -1,43 +1,35 @@
 import React from 'react';
 
+interface ClothingButtonProps {
+  label: string;
+}
+
+const ClothingButton: React.FC<ClothingButtonProps> = ({ label }) => {
+  return (
+    <button className="bg-prim-darkest text-white rounded-lg p-4 w-full text-center text-lg hover:bg-prim-neutral hover:text-prim-darkest">
+      {label}
+    </button>
+  );
+};
+
 const ClothingTypeStep: React.FC = () => {
   return (
     <div className="flex flex-col items-center h-[70vh] px-6 py-8">
-      <h2 className="text-2xl font-bold text-center mb-6">What type of clothing are you looking for?</h2>
+      <h1 className="text-4xl pr-12 text-prim-darkest font-semibold mb-12 mt-6">What 
+        <span className="text-prim-dark"> type</span> of <span className="text-prim-dark"> clothing </span> 
+        would you like to explore?</h1>
       
-      <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-        <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center hover:border-prim-darkest cursor-pointer transition-all">
-          <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">Top</span>
-          </div>
-          <p className="font-medium">Tops</p>
-        </div>
-        
-        <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center hover:border-prim-darkest cursor-pointer transition-all">
-          <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">Bottom</span>
-          </div>
-          <p className="font-medium">Bottoms</p>
-        </div>
-        
-        <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center hover:border-prim-darkest cursor-pointer transition-all">
-          <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">Dress</span>
-          </div>
-          <p className="font-medium">Dresses</p>
-        </div>
-        
-        <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center hover:border-prim-darkest cursor-pointer transition-all">
-          <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">Accessory</span>
-          </div>
-          <p className="font-medium">Accessories</p>
-        </div>
+      <div className="w-full text-left">
+        <p className="text-xl font-semibold text-prim-darkest mb-4 mt-4">
+          Choose your preferred style:
+        </p>
       </div>
-      
-      <p className="text-center text-gray-500 mt-6">
-        Select one or more types to help us personalize your experience
-      </p>
+      <div className="grid grid-cols-1 gap-4 w-full max-w-md">
+        <ClothingButton label="Masculine styles" />
+        <ClothingButton label="Feminine styles" />
+        <ClothingButton label="Unisex styles" />
+        <ClothingButton label="Prefer not to say" />
+      </div>
     </div>
   );
 };
