@@ -16,12 +16,13 @@ export default function EmptyWardrobe({
   onTakePhoto,
   onBrowseCatalogue,
 }: EmptyWardrobeProps) {
-
   return (
     <div className="flex flex-col items-center justify-center">
       <header className="flex items-center justify-center mb-6 relative w-full">
         <BackButton />
-        <div className="text-lg font-semibold text-black mx-auto">My Wardrobe</div>
+        <div className="text-lg font-semibold text-black mx-auto">
+          My Wardrobe
+        </div>
       </header>
       <p className="text-black font-xs mb-8 font-thin pr-4">
         Oops... No items found. Please choose one of the options below to add

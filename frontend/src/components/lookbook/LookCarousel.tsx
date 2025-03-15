@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Look } from "@/app/lookbook/page";
 import { Button } from "@/components/ui/button";
-import { Share } from 'lucide-react';
+import { Share } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -33,8 +33,8 @@ export default function LookBookDetail({
 
     const onSelect = () => {
       // Ensure the index is within bounds
-      console.log(api.selectedScrollSnap())
-      setActiveIndex(api.selectedScrollSnap())
+      console.log(api.selectedScrollSnap());
+      setActiveIndex(api.selectedScrollSnap());
     };
 
     // Set initial active index and listen to carousel changes.
@@ -46,16 +46,18 @@ export default function LookBookDetail({
   return (
     <div className="min-h-screen bg-white text-black p-6">
       <div className="flex justify-between">
-      {/* Active Look Title */}
-      <h1 className="text-3xl font-medium mb-4 text-prim-darkest">
-        {activeLook.name}
-      </h1>
-      <Button variant="ghost"><Share></Share></Button>
+        {/* Active Look Title */}
+        <h1 className="text-3xl font-medium mb-4 text-prim-darkest">
+          {activeLook.name}
+        </h1>
+        <Button variant="ghost">
+          <Share></Share>
+        </Button>
       </div>
-      
+
       {/* Carousel Container with extra width for peeking */}
       <Carousel
-        opts={{ align: "center",}}
+        opts={{ align: "center" }}
         setApi={setApi}
         className="w-full max-w-3xl mx-auto"
       >

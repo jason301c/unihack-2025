@@ -13,10 +13,8 @@ export default function LookBookDetail({
   looks,
   initialIndex,
 }: LookBookDetailProps) {
-
   return (
     <div className="min-h-screen bg-white text-black p-6">
-
       <LookCarousel looks={looks} initialIndex={initialIndex} />
     </div>
   );

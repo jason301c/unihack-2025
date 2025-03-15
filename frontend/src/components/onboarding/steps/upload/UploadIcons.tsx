@@ -1,17 +1,19 @@
 "use client";
-import React from 'react';
+import React from "react";
 
-export const UploadFileIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="48" 
-    height="48" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="1" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+export const UploadFileIcon: React.FC<{ className?: string }> = ({
+  className = "text-white mb-4",
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -20,17 +22,19 @@ export const UploadFileIcon: React.FC<{ className?: string }> = ({ className = "
   </svg>
 );
 
-export const UploadPhotoIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="48" 
-    height="48" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="1" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+export const UploadPhotoIcon: React.FC<{ className?: string }> = ({
+  className = "text-white mb-4",
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7" />
@@ -41,17 +45,19 @@ export const UploadPhotoIcon: React.FC<{ className?: string }> = ({ className = 
   </svg>
 );
 
-export const CameraIcon: React.FC<{ className?: string }> = ({ className = "text-white mb-4" }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="1.5" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+export const CameraIcon: React.FC<{ className?: string }> = ({
+  className = "text-white mb-4",
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />

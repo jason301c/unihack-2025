@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ClothingButtonProps {
   label: string;
@@ -15,10 +15,13 @@ const ClothingButton: React.FC<ClothingButtonProps> = ({ label }) => {
 const ClothingTypeStep: React.FC = () => {
   return (
     <div className="flex flex-col items-center h-[70vh] px-6 py-8">
-      <h1 className="text-4xl pr-12 text-prim-darkest font-medium mb-12 mt-6">What 
-        <span className="text-prim-dark"> type</span> of <span className="text-prim-dark"> clothing </span> 
-        would you like to explore?</h1>
-      
+      <h1 className="text-4xl pr-12 text-prim-darkest font-medium mb-12 mt-6">
+        What
+        <span className="text-prim-dark"> type</span> of{" "}
+        <span className="text-prim-dark"> clothing </span>
+        would you like to explore?
+      </h1>
+
       <div className="w-full text-left">
         <p className="text-xl font-semibold text-prim-darkest mb-4 mt-4">
           Choose your preferred style.

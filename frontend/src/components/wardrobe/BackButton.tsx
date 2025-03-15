@@ -10,8 +10,8 @@ const BackButton: React.FC = () => {
       variant="ghost"
       size="icon"
       className="text-black"
-      onClick={() => 
-        console.log(router.push("/home")) // This is a placeholder for the actual function
+      onClick={
+        () => console.log(router.push("/home")) // This is a placeholder for the actual function
       }
     >
       <ArrowLeft className="h-12 w-12" />

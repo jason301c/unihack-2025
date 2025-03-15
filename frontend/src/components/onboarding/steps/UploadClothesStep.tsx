@@ -35,19 +35,20 @@ const UploadClothesStep: React.FC = () => {
       </h2>
 
       <p className="text-dark font-extralight leading-tight text-lg mb-12 mr-24">
-        Flat-laid clothing against a light background works best for our processing algorithm.
-        Feel free to skip if you do not wish to upload a photo. 
+        Flat-laid clothing against a light background works best for our
+        processing algorithm. Feel free to skip if you do not wish to upload a
+        photo.
       </p>
 
       {selectedImage ? (
         <div className="mb-8">
-          <img 
-            src={selectedImage} 
-            alt="Selected clothing" 
-            className="w-64 h-64 object-cover rounded-lg border-2" 
-            style={{borderColor: COLORS.secondary}}
+          <img
+            src={selectedImage}
+            alt="Selected clothing"
+            className="w-64 h-64 object-cover rounded-lg border-2"
+            style={{ borderColor: COLORS.secondary }}
           />
-          <button 
+          <button
             onClick={() => setSelectedImage(null)}
             className="mt-2 text-prim-dark underline"
           >

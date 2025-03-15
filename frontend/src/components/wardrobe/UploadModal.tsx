@@ -29,7 +29,7 @@ export default function UploadModal({
             <X className="h-5 w-5" />
           </Button>
         </div>
-        
+
         <div className="space-y-4">
           <Button
             variant="secondary"
@@ -38,7 +38,7 @@ export default function UploadModal({
           >
             Upload from Camera Roll
           </Button>
-          
+
           <Button
             variant="secondary"
             className="w-full bg-prim-darkest hover:bg-prim-light hover:text-black text-white rounded-3xl py-6"

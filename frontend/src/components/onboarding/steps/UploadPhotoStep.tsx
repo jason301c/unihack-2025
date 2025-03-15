@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useRef } from 'react';
-import UploadBox from './upload/UploadBox';
-import { UploadFileIcon, CameraIcon } from './upload/UploadIcons';
+import React, { useState, useRef } from "react";
+import UploadBox from "./upload/UploadBox";
+import { UploadFileIcon, CameraIcon } from "./upload/UploadIcons";
 import COLORS from "../../../../constants/colors";
 
 const UploadPhotoStep: React.FC = () => {
@@ -34,18 +34,19 @@ const UploadPhotoStep: React.FC = () => {
       </h2>
 
       <p className="text-dark font-extralight leading-tight text-lg mb-12 mr-24">
-        A clear shot of your full body works best. Feel free to skip if you do not wish to upload a photo.
+        A clear shot of your full body works best. Feel free to skip if you do
+        not wish to upload a photo.
       </p>
 
       {selectedImage ? (
         <div className="mb-8">
-          <img 
-            src={selectedImage} 
-            alt="User selfie" 
-            className="w-64 h-64 object-cover rounded-lg border-2" 
-            style={{borderColor: COLORS.secondary}}
+          <img
+            src={selectedImage}
+            alt="User selfie"
+            className="w-64 h-64 object-cover rounded-lg border-2"
+            style={{ borderColor: COLORS.secondary }}
           />
-          <button 
+          <button
             onClick={() => setSelectedImage(null)}
             className="mt-2 text-prim-dark underline"
           >

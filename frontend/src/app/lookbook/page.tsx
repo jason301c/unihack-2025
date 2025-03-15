@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 export type Look = {
   id: string;
   name: string;
-  image: string;         // single cover image
-  itemsUsed: string[];   // e.g. ["Green Jacket", "Black Jeans"]
+  image: string; // single cover image
+  itemsUsed: string[]; // e.g. ["Green Jacket", "Black Jeans"]
 };
 //
 const initialLooks: Look[] = [
@@ -58,15 +58,12 @@ export default function LookBookPage() {
   return (
     <div className="min-h-screen bg-white text-black">
       <Button variant="ghost" onClick={handleBack}>
-          ←
-        </Button>
-        {looks.length === 0 ? (
+        ←
+      </Button>
+      {looks.length === 0 ? (
         <EmptyLookBook />
       ) : selectedIndex >= 0 ? (
-        <LookBookDetail
-          looks={looks}
-          initialIndex={selectedIndex}
-        />
+        <LookBookDetail looks={looks} initialIndex={selectedIndex} />
       ) : (
         <LookBookGallery looks={looks} onSelectLook={handleSelectLook} />
       )}

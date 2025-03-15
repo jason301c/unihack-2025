@@ -33,7 +33,9 @@ export default function WardrobeGrid({
       <header className="flex items-center justify-between mb-6 w-full">
         <div className="flex items-center">
           <BackButton />
-          <div className="text-lg font-semibold text-black ml-2">My Wardrobe</div>
+          <div className="text-lg font-semibold text-black ml-2">
+            My Wardrobe
+          </div>
         </div>
         <Button
           variant="secondary"
@@ -43,10 +45,13 @@ export default function WardrobeGrid({
           {isEditing ? "Done" : "Edit"}
         </Button>
       </header>
-      
+
       <div className="grid grid-cols-3 gap-4 justify-items-center flex-grow">
         {items.map((item: ClothingItem) => (
-          <div key={item.id} className={`relative w-26 h-26 item-container ${isEditing ? "shake" : ""}`}>
+          <div
+            key={item.id}
+            className={`relative w-26 h-26 item-container ${isEditing ? "shake" : ""}`}
+          >
             <Image
               src={item.imageUrl}
               alt={item.name}
@@ -87,10 +92,7 @@ export default function WardrobeGrid({
       </div>
 
       {/* SearchSheet component */}
-      <SearchSheet 
-        isOpen={isSearchOpen} 
-        onOpenChange={setIsSearchOpen} 
-      />
+      <SearchSheet isOpen={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </div>
   );
 }

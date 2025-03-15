@@ -11,14 +11,14 @@ export default function OnboardingLayout({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   // Extract the step from the path or default to step 0
   const [currentStep, setCurrentStep] = useState(0);
-  
+
   useEffect(() => {
     // Parse the step from query parameter
-    const stepParam = searchParams.get('step');
-    
+    const stepParam = searchParams.get("step");
+
     if (stepParam && !isNaN(parseInt(stepParam, 10))) {
       // If step param exists and is a valid number
       setCurrentStep(parseInt(stepParam, 10));
@@ -30,7 +30,7 @@ export default function OnboardingLayout({
 
   // The total number of steps in the onboarding process
   const totalSteps = 5;
-  
+
   const goToNextStep = () => {
     const nextStep = currentStep + 1;
     if (nextStep < totalSteps) {
@@ -44,7 +44,7 @@ export default function OnboardingLayout({
   const handleBackClick = () => {
     if (currentStep === 0) {
       // If at the first step, go back to homepage
-      router.push('/');
+      router.push("/");
     } else {
       // Otherwise go to the previous step
       router.push(`/onboarding?step=${currentStep - 1}`);
@@ -78,9 +78,7 @@ export default function OnboardingLayout({
         </button>
       </div>
 
-      <div className="flex-grow">
-        {children}
-      </div>
+      <div className="flex-grow">{children}</div>
 
       {/* Pagination */}
       <div className="p-4 pb-4 flex justify-between items-center sticky bottom-0 left-0 right-0 bg-white">
@@ -89,18 +87,18 @@ export default function OnboardingLayout({
             <div
               key={index}
               className={`rounded-full transition-all ${
-                currentStep === index 
+                currentStep === index
                   ? "w-6 h-3 bg-prim-darkest" // Current step - wider indicator
-                  : "w-3 h-3 bg-gray-500"     // Other steps - standard circular indicator
+                  : "w-3 h-3 bg-gray-500" // Other steps - standard circular indicator
               }`}
             ></div>
           ))}
         </div>
 
-        <button 
+        <button
           onClick={goToNextStep}
           className="bg-prim-darkest text-white px-6 py-2 rounded-full font-medium"
-        > 
+        >
           {currentStep === totalSteps - 1 ? "Finish" : "Next"}
         </button>
       </div>

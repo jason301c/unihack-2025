@@ -1,14 +1,14 @@
 "use client";
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import SelectClothes from '@/components/livelook/SelectClothes';
-import UploadPhoto from '@/components/livelook/UploadPhoto';
-import Generated from '@/components/livelook/Generated';
+import { useRouter, useSearchParams } from "next/navigation";
+import SelectClothes from "@/components/livelook/SelectClothes";
+import UploadPhoto from "@/components/livelook/UploadPhoto";
+import Generated from "@/components/livelook/Generated";
 
 export default function LiveLook() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const step = Number(searchParams.get('step') || '0');
+  const step = Number(searchParams.get("step") || "0");
 
   // Handle navigation between steps
   const goToStep = (newStep: number) => {
@@ -19,12 +19,12 @@ export default function LiveLook() {
     if (step > 0) {
       goToStep(step - 1);
     } else {
-      router.push('/home'); // Go to home if at first step
+      router.push("/home"); // Go to home if at first step
     }
   };
 
   const goToHome = () => {
-    router.push('/');
+    router.push("/");
   };
 
   // Render the appropriate component based on the current step

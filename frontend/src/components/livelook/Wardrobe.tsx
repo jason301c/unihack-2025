@@ -44,7 +44,7 @@ export default function Wardrobe({ isOpen, onOpenChange }: WardrobeProps) {
             id: index.toString(),
             name: `Item ${index + 1}`,
             imageUrl: img.url,
-          }))
+          })),
         );
       } catch (err) {
         console.error("Error fetching images:", err);

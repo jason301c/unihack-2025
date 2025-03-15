@@ -109,4 +109,4 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
       />
     </div>
   );
-};
+}

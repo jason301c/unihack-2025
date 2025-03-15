@@ -41,14 +41,14 @@ export default function Home() {
         <div className="absolute bottom-[-50px] w-full">
           {/* This is the actual button */}
           <Link href="/onboarding?step=1" className="block">
-          <button 
+            <button
               className="text-xl font-semibold px-6 py-10 w-full bg-prim-darkest text-prim-light flex items-center justify-center h-[70px]"
-              style={{ borderRadius: '20px 20px 0 0' }}
+              style={{ borderRadius: "20px 20px 0 0" }}
             >
               <span className="">Continue</span>
             </button>
           </Link>
-          
+
           {/* This is the extension of the button's background */}
           <div className="h-[50px] w-full bg-prim-darkest"></div>
         </div>

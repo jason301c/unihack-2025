@@ -23,11 +23,11 @@ export default function Generated({ onBack, onFinish }: GeneratedProps) {
       {/* Centered Generated Image */}
       <div className="flex flex-1 items-center justify-center">
         <div className="w-86 h-115 border-2 border-gray-300 rounded-md flex items-center justify-center">
-          <Image 
-            src={ILLUSTRATIONS.pianoGirl} 
-            alt="Generated Look" 
-            width={300} 
-            height={400} 
+          <Image
+            src={ILLUSTRATIONS.pianoGirl}
+            alt="Generated Look"
+            width={300}
+            height={400}
             className="w-full h-full obje   ct-contain"
           />
         </div>
@@ -41,15 +41,15 @@ export default function Generated({ onBack, onFinish }: GeneratedProps) {
           placeholder="Describe your outfit..."
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
         />
-        
+
         {/* Save Button */}
-        <button 
+        <button
           onClick={onFinish}
           className="w-full p-3 bg-prim-darkest text-white rounded-md shadow-md hover:opacity-90 transition mb-3"
         >
           Save Look
         </button>
-        
+
         {/* Try Again Button */}
         <button
           onClick={onBack}

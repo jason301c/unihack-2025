@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect } from 'react';
+import { useState, KeyboardEvent, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { ItemsSection } from "@/components/onboarding/steps/choose-items/ItemsSection";
 import { QueryResult } from "@/components/onboarding/steps/ChooseItemsStep";
@@ -10,9 +10,10 @@ interface SearchQueryResult {
 }
 
 export function SearchSection() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchQueryResult[]>([]);
-  const [transformedResult, setTransformedResult] = useState<QueryResult | null>(null);
+  const [transformedResult, setTransformedResult] =
+    useState<QueryResult | null>(null);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
@@ -23,16 +24,18 @@ export function SearchSection() {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/search?q=${encodeURIComponent(searchQuery)}`);
-      const results = await response.json() as SearchQueryResult[];
+      const response = await fetch(
+        `${apiUrl}/search?q=${encodeURIComponent(searchQuery)}`,
+      );
+      const results = (await response.json()) as SearchQueryResult[];
       setSearchResults(results);
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error("Search failed:", error);
     }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -46,21 +49,21 @@ export function SearchSection() {
         })),
       });
     } else {
-        setTransformedResult(null);
+      setTransformedResult(null);
     }
-  },[searchResults, searchQuery])
+  }, [searchResults, searchQuery]);
 
   return (
     <div>
       <h3 className="text-2xl text-bold text-prim-darkest mb-1">Search</h3>
-      <Input 
-        placeholder="Search for clothes..." 
+      <Input
+        placeholder="Search for clothes..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         className="w-full mb-4"
       />
-      
+
       {transformedResult && (
         <ItemsSection
           query={transformedResult.query}

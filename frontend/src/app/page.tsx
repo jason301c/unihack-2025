@@ -1,6 +1,6 @@
 import React from "react";
 import { Logo } from "@/components/base-screen/Logo";
-import  { AuthForm } from "@/components/base-screen/AuthForm";
+import { AuthForm } from "@/components/base-screen/AuthForm";
 
 export const AuthPage: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const AuthPage: React.FC = () => {
         <div className="relative w-full max-w-[402px]">
           <figure>
             <div>
-              <img src="frontlogo.svg"/>
+              <img src="frontlogo.svg" />
             </div>
           </figure>
         </div>

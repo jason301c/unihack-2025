@@ -31,7 +31,7 @@ export const AuthForm: React.FC = () => {
         </Button>
         <Button
           variant="secondary"
-          onClick={() => window.location.href = '/onboarding'}
+          onClick={() => (window.location.href = "/onboarding")}
           aria-label="Continue as guest"
         >
           Continue as guest
