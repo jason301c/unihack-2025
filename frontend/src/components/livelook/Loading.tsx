@@ -5,17 +5,21 @@ import Image from "next/image";
 import COLORS from "../../../constants/colors";
 import ILLUSTRATIONS from "../../../constants/illustrations";
 
-export default function Home() {
+interface LoadingProps {
+  onBack?: () => void;
+}
+
+export default function Loading({ onBack }: LoadingProps) {
   return (
     <div className="flex flex-col h-screen items-center justify-center relative bg-white text-black"
     style={{ backgroundColor: COLORS.background, color: COLORS.text }}>
       {/* Header with Back Button */}
       <header className="absolute top-0 left-0 p-4">
-        <button className="text-white">
+        <button className="text-white" onClick={onBack}>
           <ArrowLeft className="w-6 h-6" />
         </button>
       </header>
-
+      
       {/* Centered Image and Loader */}
       <div className="flex flex-col items-center">
         {/* Weaving Text as an Image */}
