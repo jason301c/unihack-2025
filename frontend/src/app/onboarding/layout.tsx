@@ -37,7 +37,7 @@ export default function OnboardingLayout({
       router.push(`/onboarding?step=${nextStep}`);
     } else {
       // If we've completed all steps, redirect to a final destination
-      router.push("/wardrobe");
+      router.push("/home");
     }
   };
 
