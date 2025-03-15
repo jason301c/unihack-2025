@@ -2,6 +2,7 @@ import { useState, KeyboardEvent, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { ItemsSection } from "@/components/onboarding/steps/choose-items/ItemsSection";
 import { QueryResult } from "@/components/onboarding/steps/ChooseItemsStep";
+import { getAccessToken } from "@auth0/nextjs-auth0";
 
 interface SearchQueryResult {
   title: string;
@@ -24,8 +25,14 @@ export function SearchSection() {
     }
 
     try {
+      const token = await getAccessToken();
       const response = await fetch(
         `${apiUrl}/search?q=${encodeURIComponent(searchQuery)}`,
+        {
+          headers: {
+        Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const results = (await response.json()) as SearchQueryResult[];
       setSearchResults(results);

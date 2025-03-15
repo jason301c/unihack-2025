@@ -8,7 +8,7 @@ const AuthPage: React.FC = () => {
   const baseStyles =
     "w-full text-xl h-[54px] rounded-[300px] transition-colors duration-200 flex items-center justify-center cursor-pointer";
   const variantStyles = {
-    primary: "text-black shadow bg-prim-neutral hover:bg-slate-300",
+    primary: "text-black shadow bg-prim-lightest hover:bg-slate-300",
     secondary: "text-white bg-prim-darkest hover:bg-slate-700",
   };
 
