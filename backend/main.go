@@ -1,12 +1,24 @@
 package main
 
 import (
+	"log"
 	"net/http"
+
+	"unihack-2025/backend/db"
+	"unihack-2025/backend/fetcher"
+	"unihack-2025/backend/googlescrape"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// Initialize MongoDB connection
+	if err := db.Connect(); err != nil {
+		log.Printf("Warning: Failed to connect to MongoDB: %v", err)
+	} else {
+		defer db.Disconnect()
+	}
+
 	r := gin.Default()
 
 	// CORS middleware
@@ -28,6 +40,12 @@ func main() {
 			"message": "Hello from Unihack 2025 Backend!",
 		})
 	})
+
+	// Search endpoint
+	r.GET("/search", googlescrape.HandleSearch)
+
+	// Fetch random clothes endpoint
+	r.GET("/fetch", fetcher.HandleFetch)
 
 	r.Run(":8080")
 }
