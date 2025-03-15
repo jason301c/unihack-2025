@@ -1,0 +1,12 @@
+This is Livelook - a branch from home
+
+PURPOSE:
+- Turn their wardrobe, into fits.
+- There are three branches of home: lookbook, fits, livelook. Livelook is a combination of what we collected from the other two.
+
+FUNCTIONALITY:
+- Take in user's selection of wardrobe stuff
+- Take in user's picture
+- Generate fits
+
+@see components/livelook

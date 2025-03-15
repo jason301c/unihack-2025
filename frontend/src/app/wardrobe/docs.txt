@@ -1,0 +1,8 @@
+This is wardrobe - a branch off from home
+
+FUNCTIONALITIES:
+- Fetch user clothes
+- Add clothes to user's collection
+- Remove clothes from user's collection
+
+@see components/wardrobe

@@ -1,0 +1,7 @@
+This is a Lookbook - a branch from home
+
+FUNCTIONALITIES:
+- Call API to fetch the user's look books
+- Display it
+
+@see components/lookbook

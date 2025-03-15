@@ -1,0 +1,11 @@
+This is Onboarding - process before user can join the app
+
+FUNCTIONALITIES:
+- Collect and save user data
+
+There are MULTIPLE PROCESSES, you can see the ordering in page.tsx.
+
+Concept is that, page.tsx and layout.tsx handles page movements, with the help of search params (/onboarding?step=1)
+The individual pages are react components, which can be treated the same as pages.
+
+@see components/onboarding
