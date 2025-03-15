@@ -13,7 +13,7 @@ export interface QueryResult {
 }
 
 async function fetchItems(): Promise<QueryResult[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = process.env.NEXT_SERVER_API_URL || "";
 
   if (!apiUrl) {
     throw new Error("API URL is not defined");
