@@ -2,8 +2,15 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { auth0 } from "@/lib/auth0";
+import { redirect } from 'next/navigation'
 
-const AuthPage: React.FC = () => {
+export default async function AuthPage() {
+  const session = await auth0.getSession();
+  if (session) {
+    return redirect("/home");
+  }
+
   // Base styles for our "button-like" divs
   const baseStyles =
     "w-full text-xl h-[54px] rounded-[300px] transition-colors duration-200 flex items-center justify-center cursor-pointer";
@@ -86,4 +93,3 @@ const AuthPage: React.FC = () => {
   );
 };
 
-export default AuthPage;
