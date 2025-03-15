@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import UploadSection from "@/components/UploadSection";
+import COLORS from '../../../constants/colors';
 
 export default function UploadSelf() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -29,8 +30,8 @@ export default function UploadSelf() {
         <Button variant="ghost" size="icon" className="mb-4">
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-3xl font-bold mb-10">
-          Upload a photo of yourself
+        <h1 className="text-4xl font-bold mb-8">
+          Upload a <span style={{color: COLORS.secondary}}>photo</span> of yourself
         </h1>
         <h3 className="text-xl mb-4 font-thin">
         A clear shot of your face works best. Feel free to skip if you do not wish to upload a photo .

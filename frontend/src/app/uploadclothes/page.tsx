@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import UploadSection from "@/components/UploadSection";
+import COLORS from '../../../constants/colors';
 
 export default function UploadClothes() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -29,8 +30,8 @@ export default function UploadClothes() {
         <Button variant="ghost" size="icon" className="mb-4">
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-3xl font-bold mb-10">
-          Upload photos of your favourite clothes
+        <h1 className="text-4xl font-bold mb-8">
+          Upload <span style={{color: COLORS.secondary}}>photos</span> of your favourite <span style={{color: COLORS.secondary}}>clothes</span>
         </h1>
         <h3 className="text-xl mb-4 font-thin">
         Flat lay images of clothing against a clean background work best. Feel free to skip if you do not wish to upload a photo.
