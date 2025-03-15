@@ -4,12 +4,10 @@ import React from "react";
 
 export interface QueryResult {
   query: string;
-  images: [
-    {
-      link: string;
-      brand?: string;
-    }
-  ];
+  images: {
+    link: string;
+    brand?: string;
+  }[];
 }
 
 async function fetchItems(): Promise<QueryResult[]> {
