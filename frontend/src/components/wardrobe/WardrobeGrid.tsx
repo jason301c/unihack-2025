@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import "@/components/wardrobe/ShakeAnimation.css";
 import { X, Plus } from "lucide-react";
-
+import BackButton from "./BackButton";
 
 export type ClothingItem = {
   id: string;
@@ -28,8 +28,11 @@ export default function WardrobeGrid({
 
   return (
     <div>
-      <header className="flex items-center justify-between mb-6">
-        <div className="text-lg font-semibold text-black">My Wardrobe</div>
+      <header className="flex items-center justify-between mb-6 w-full">
+        <div className="flex items-center">
+          <BackButton />
+          <div className="text-lg font-semibold text-black ml-2">My Wardrobe</div>
+        </div>
         <Button
           variant="secondary"
           className="hover:bg-prim-dark text-white rounded-3xl px-6 bg-prim-darkest"

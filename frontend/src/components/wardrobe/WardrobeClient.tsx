@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useRef, ChangeEvent } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
@@ -98,24 +96,12 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
 
   return (
     <>
-      {/* Top bar */}
-      <div className="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-black"
-          onClick={() => router.back()}
-        >
-          <ArrowLeft className="h-6 w-6" />
-        </Button>
-      </div>
-
       {/* Loading or Error States */}
       {loading && <p className="text-center">Processing upload...</p>}
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       {/* Check if wardrobe is empty or not */}
-      {items.length === 0 ? (
+      {items.length !== 0 ? (
         <EmptyWardrobe
           onUploadFromRoll={handleUploadFromRoll}
           onTakePhoto={handleOpenCamera}
