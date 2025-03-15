@@ -4,7 +4,8 @@ import { useState } from "react";
 import EmptyLookBook from "@/components/lookbook/EmptyLookBook";
 import LookBookGallery from "@/components/lookbook/LookBookGallery";
 import LookBookDetail from "@/components/lookbook/LookBookDetail";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export type Look = {
   id: string;
@@ -51,15 +52,11 @@ export default function LookBookPage() {
     setSelectedIndex(index);
   };
 
-  const handleBack = () => {
-    setSelectedIndex(-1);
-  };
-
   return (
     <div className="min-h-screen bg-white text-black">
-      <Button variant="ghost" onClick={handleBack}>
-        ←
-      </Button>
+      <Link href="/home" className="flex justify-start p-4">
+        <ArrowLeft className="w-6 h-6" />
+      </Link>
       {looks.length === 0 ? (
         <EmptyLookBook />
       ) : selectedIndex >= 0 ? (
