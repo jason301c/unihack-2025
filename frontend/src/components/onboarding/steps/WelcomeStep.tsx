@@ -8,7 +8,7 @@ export default async function Home() {
   const name = session?.user.name?.split('@')[0].slice(0, 10) || "Guest";
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-screen w-screen overflow-y-auto">
       {/* Text Section remains unchanged */}
       <div className="flex flex-col text-left w-full px-6 mt-8 pt-20">
         { name && (
@@ -57,9 +57,6 @@ export default async function Home() {
               <span className="">Continue</span>
             </button>
           </Link>
-
-          {/* This is the extension of the button's background */}
-          <div className="h-[50px] w-full bg-prim-darkest"></div>
         </div>
       </div>
     </div>
