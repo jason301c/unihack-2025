@@ -17,29 +17,47 @@ export type Look = {
 const initialLooks: Look[] = [
   {
     id: "1",
-    name: "Emerald Forest",
-    image: "/aiman.png",
+    name: "John's Basic Look",
+    image: "/demo/gen-1.webp",
     itemsUsed: [
-      "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
-      "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/444527/item/goods_00_444527_3x4.jpg?width=494",
+      "/demo/used-1.png",
+      "/demo/base-white.jpg",
     ],
   },
   {
     id: "2",
-    name: "Urban Street",
-    image: "https://image-pre-raw.s3.ap-southeast-2.amazonaws.com/IMG_2071.jpg",
+    name: "John's Summer Look 🥵",
+    image: "/demo/gen-2.webp",
     itemsUsed: [
-      "https://image.uniqlo.com/UQ/ST3/au/imagesgoods/477984/item/augoods_00_477984_3x4.jpg",
-      "https://image.uniqlo.com/UQ/ST3/au/imagesgoods/477984/item/augoods_00_477984_3x4.jpg",
+      "/demo/use-123.png",
+      "/demo/use-2.png",
     ],
   },
   {
     id: "3",
-    name: "High Time",
-    image: "/aiman.png",
+    name: "John's Uni Look",
+    image: "/demo/gen-3.webp",
     itemsUsed: [
-      "https://image-pre-raw.s3.ap-southeast-2.amazonaws.com/tops/4152283_1500x.jpg",
-      "https://image-pre-raw.s3.ap-southeast-2.amazonaws.com/tops/53326_GPFR_480x.jpg",
+      "/demo/use-123.png",
+      "/demo/use-3.webp",
+    ],
+  },
+  {
+    id: "4",
+    name: "John's Studying Look",
+    image: "/demo/gen-4.webp",
+    itemsUsed: [
+      "/demo/use-4.png",
+      "/demo/use-45.jpeg",
+    ],
+  },
+  {
+    id: "5",
+    name: "John's Winter Look",
+    image: "/demo/gen-5.webp",
+    itemsUsed: [
+      "/demo/use-45.jpeg",
+      "/demo/use-5.webp",
     ],
   },
 ];
