@@ -73,7 +73,7 @@ export default function LiveLook() {
           model_image: uploadedPhoto,
           garment_image: topClothing ? topClothing.imageUrl : "",
           pants_image: bottomClothing ? bottomClothing.imageUrl : "",
-          category: bottomClothing ? "bottoms" : "tops",
+          category: "bottoms",
         }),
       });
       const data = await response.json();
