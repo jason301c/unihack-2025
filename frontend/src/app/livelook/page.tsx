@@ -64,7 +64,7 @@ export default function LiveLook() {
     goToStep(2);
     try {
       // TODO: Add actual API call here
-      const response = await fetch("http://localhost:8080/generation", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function LiveLook() {
           pants_image: bottomClothing ? bottomClothing.imageUrl : "",
           category: bottomClothing ? "bottoms" : "tops",
         }),
-      });     
+      });
       const data = await response.json();
       const outputUrl = data.full_outfit_generation?.output?.[0] || data.top_generation?.output?.[0] || null;
       setGeneratedImage(outputUrl); // This will be replaced with actual generated image
