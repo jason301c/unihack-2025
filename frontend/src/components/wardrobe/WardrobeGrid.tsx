@@ -33,7 +33,7 @@ export default function WardrobeGrid({
       {/* Modified header layout to match LookBook page */}
       <div className="mb-6">
         <BackButton />
-        <div className="flex items-center justify-between p-2">
+        <div className= "flex items-center justify-between p-2">
           <h1 className="text-3xl font-semibold text-prim-darkest">
             My Wardrobe
           </h1>
