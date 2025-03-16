@@ -15,6 +15,13 @@ import (
 )
 
 func UploadFileHandler(c *gin.Context) {
+	// Get the bucket name from form data
+	bucketName := c.PostForm("bucket")
+	if bucketName == "" {
+		c.JSON(400, gin.H{"error": "Bucket name is required"})
+		return
+	}
+
 	// Parse the multipart form data (upload file)
 	file, fileHeader, err := c.Request.FormFile("file")
 	if err != nil {
@@ -23,7 +30,7 @@ func UploadFileHandler(c *gin.Context) {
 	}
 	defer file.Close()
 
-	// Generate a unique filename (using the original file's base name and timestamp)
+	// Generate a unique filename
 	fileName := fmt.Sprintf("%d-%s", time.Now().UnixNano(), filepath.Base(fileHeader.Filename))
 
 	// Get AWS credentials from environment variables
@@ -47,9 +54,9 @@ func UploadFileHandler(c *gin.Context) {
 
 	// Upload the file to S3
 	_, err = svc.PutObject(&s3.PutObjectInput{
-		Bucket:      aws.String("src-img-unihack"), // Your S3 bucket name
-		Key:         aws.String(fileName),         // S3 object key (filename)
-		Body:        file,                         // File body to upload
+		Bucket:      aws.String(bucketName), // Dynamic bucket name
+		Key:         aws.String(fileName),
+		Body:        file,
 		ContentType: aws.String("application/octet-stream"),
 	})
 	if err != nil {
@@ -59,7 +66,7 @@ func UploadFileHandler(c *gin.Context) {
 	}
 
 	// Generate a URL for the uploaded file
-	fileURL := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", "image-pre-raw", "ap-southeast-2", fileName)
+	fileURL := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", bucketName, "ap-southeast-2", fileName)
 
 	// Return the URL of the uploaded file
 	c.JSON(200, gin.H{"message": "File uploaded successfully", "url": fileURL})

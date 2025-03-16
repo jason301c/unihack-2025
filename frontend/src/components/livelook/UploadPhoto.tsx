@@ -25,13 +25,35 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
     fileInputRef.current?.click();
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setUploadedPhoto(imageUrl);
+    if (!file) return;
+  
+    const bucketName = "dest-img-unihack";
+  
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("bucket", bucketName);
+  
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!res.ok) {
+        throw new Error(`Upload failed: ${res.statusText}`);
+      }
+  
+      const data = await res.json();
+      setUploadedPhoto(data.url); // Set uploaded image URL from S3
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
+  
 
   const handleOpenCamera = () => {
     // Trigger the hidden camera input

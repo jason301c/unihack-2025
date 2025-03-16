@@ -47,6 +47,7 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
       // Create FormData to send the file
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("bucket", "src-img-unihack")
 
       try {
         setLoading(true);
