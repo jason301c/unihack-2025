@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import "@/components/wardrobe/ShakeAnimation.css";
-import { X, Plus, Search } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import BackButton from "./BackButton";
 import SearchSheet from "./search-clothes/SearchSheet";
 
