@@ -8,9 +8,11 @@ import (
 	"unihack-2025/backend/fashion"
 	"unihack-2025/backend/fetcher"
 	"unihack-2025/backend/googlescrape"
+	"unihack-2025/backend/middleware"
 	"unihack-2025/backend/s3"
 
 	"github.com/gin-gonic/gin"
+	adapter "github.com/gwatts/gin-adapter"
 )
 
 func main() {
@@ -53,7 +55,6 @@ func main() {
 
 	// PROTECTED ROUTES:
 	// JWT middleware (PROTECTED ROUTES BEGIN BELOW)
-	// r.Use(adapter.Wrap(middleware.EnsureValidToken()))
 	// Later we'll protect
 
 	// Search endpoint
@@ -61,6 +62,8 @@ func main() {
 
 	// New endpoint for uploading files to S3
 	r.POST("/api/upload", s3.UploadFileHandler)
+
+	r.Use(adapter.Wrap(middleware.EnsureValidToken()))
 
 	// New endpoint for full outfit generation (top + pants)
 	r.POST("/generation", fashion.HandleFullOutfitGeneration)

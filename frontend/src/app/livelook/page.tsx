@@ -6,6 +6,7 @@ import SelectClothes from "@/components/livelook/select-clothes/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
 import Loading from "@/components/livelook/Loading";
+import { getAccessToken } from "@auth0/nextjs-auth0"
 
 // Define the type for a clothing item
 interface ClothingItem {
@@ -63,11 +64,13 @@ export default function LiveLook() {
     setIsGenerating(true);
     goToStep(2);
     try {
+      const token = await getAccessToken()
       // TODO: Add actual API call here
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           model_image: uploadedPhoto,
