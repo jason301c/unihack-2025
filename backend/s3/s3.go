@@ -77,6 +77,11 @@ func ListImages() ([]Image, error) {
 		if trimmedKey == "" || trimmedKey[len(trimmedKey)-1] == '/' || *item.Size == 0 {
 			continue
 		}
+		
+		// Skip files unless they have top/ or bottom/ in the key
+		if !strings.Contains(trimmedKey, "top/") && !strings.Contains(trimmedKey, "bottom/") {
+			continue
+		}
 
 		imageURL := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", config.Bucket, config.Region, trimmedKey)
 		images = append(images, Image{URL: imageURL})
