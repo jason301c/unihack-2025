@@ -8,19 +8,21 @@ const UserMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <div className="relative">
       {isLoggedIn ? (
-        <div className="flex items-center gap-2">
+        <a
+          href="/auth/logout"
+          className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
+        >
+          Logout
           <User className="w-8 h-8 cursor-pointer" />
-          <a 
-            href="/auth/logout" 
-            className="text-sm text-prim-darkest hover:text-prim-neutral"
-          >
-            Logout
-          </a>
-        </div>
+        </a>
       ) : (
-        <Link href="/api/auth/login">
+        <a
+          href="/auth/login"
+          className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
+        >
+          Log in
           <User className="w-8 h-8 cursor-pointer" />
-        </Link>
+        </a>
       )}
     </div>
   );
@@ -28,7 +30,7 @@ const UserMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
 export default async function Home() {
   const session = await auth0.getSession();
-  const name = session?.user.name.slice(0,10) || "Guest";
+  const name = session?.user.name?.split("@")[0].slice(0, 10) || "Guest";
   const isLoggedIn = !!session;
 
   return (
@@ -61,10 +63,12 @@ export default async function Home() {
         <Link href="/lookbook" className="w-full">
           <button className="w-full py-10 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral relative overflow-hidden">
             <span className="z-10">Look Book</span>
-            <img
+            <Image
               src={ILLUSTRATIONS.lookbook}
               alt="Icon"
-              className="absolute right-[10px] top-0 h-full min-w-[150px] object-cover object-right rounded-r-lg"
+              width={96}
+              height={96}
+              className="h-24 object-cover"
             />
           </button>
         </Link>

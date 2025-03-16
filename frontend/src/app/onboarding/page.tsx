@@ -22,17 +22,17 @@ export default async function OnboardingStepPage({
   // Render the appropriate step component based on the step number
   switch (stepNumber) {
     case 0:
-      return <WelcomeStep />;
-    case 1:
       return <ClothingTypeStep />;
-    case 2:
+    case 1:
       return <ChooseItemsStep />;
-    case 3:
+    case 2:
       return <UploadClothesStep />;
-    case 4:
+    case 3:
       return <UploadPhotoStep />;
+    case 4:
+      return <WelcomeStep />;
     default:
       // Default to the welcome step if the step number is invalid
-      return <WelcomeStep />;
+      return <ClothingTypeStep />;
   }
 }

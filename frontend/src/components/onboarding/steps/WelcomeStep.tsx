@@ -4,9 +4,8 @@ import Link from "next/link";
 import { auth0 } from "@/lib/auth0";
 
 export default async function Home() {
-    // Get user 
-    const session = await auth0.getSession();
-    const name = session?.user.name?.slice(0, 10);
+  const session = await auth0.getSession();
+  const name = session?.user.name?.split('@')[0].slice(0, 10) || "Guest";
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
@@ -40,7 +39,7 @@ export default async function Home() {
             <Image
               src={ILLUSTRATIONS.dressgirl}
               alt="Fashion Illustration"
-              layout="responsive"
+              layout={"responsive"}
               width={100}
               height={100}
             />
@@ -50,7 +49,7 @@ export default async function Home() {
         {/* Button with background extension */}
         <div className="absolute bottom-[-50px] w-full">
           {/* This is the actual button */}
-          <Link href="/onboarding?step=1" className="block">
+          <Link href="/home" className="block">
             <button
               className="text-xl font-semibold px-6 py-10 w-full bg-prim-darkest text-prim-light flex items-center justify-center h-[70px]"
               style={{ borderRadius: "20px 20px 0 0" }}

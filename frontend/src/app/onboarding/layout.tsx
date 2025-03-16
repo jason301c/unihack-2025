@@ -51,8 +51,8 @@ export default function OnboardingLayout({
     }
   };
 
-  // For the first page, we just return the children
-  if (currentStep === 0) {
+  // For the 4th page, we just return the children
+  if (currentStep === 4) {
     return <div className="flex-grow">{children}</div>;
   }
   return (
