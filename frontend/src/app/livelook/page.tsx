@@ -59,13 +59,26 @@ export default function LiveLook() {
     if (!uploadedPhoto || (!topClothing && !bottomClothing)) {
       return;
     }
-
+    
     setIsGenerating(true);
     goToStep(2);
     try {
       // TODO: Add actual API call here
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulated delay
-      setGeneratedImage(uploadedPhoto); // This will be replaced with actual generated image
+      const response = await fetch("http://localhost:8080/generation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model_image: uploadedPhoto,
+          garment_image: topClothing ? topClothing.imageUrl : "",
+          pants_image: bottomClothing ? bottomClothing.imageUrl : "",
+          category: bottomClothing ? "bottoms" : "tops",
+        }),
+      });     
+      const data = await response.json();
+      const outputUrl = data.full_outfit_generation?.output?.[0] || data.top_generation?.output?.[0] || null;
+      setGeneratedImage(outputUrl); // This will be replaced with actual generated image
     } catch (error) {
       console.error('Failed to generate image:', error);
     } finally {
