@@ -1,9 +1,21 @@
-# Unihack 2025 Project
+# Weave (UNIHACK 2025 3rd Place Overall)
 
-This repository contains the frontend and backend components our UNIHACK 2025 project.
+Weave is a mobile-focused web-app that provides users with a convenient and efficient way to find and **try on** clothing products.
+This repository contains the full codebase for our UNIHACK 2025 project.
 
-## Overview
-Our project aims to provide users with a convenient and efficient way to find clothing products. We leverage the power of Next.js for the frontend and Go for the backend, ensuring a seamless and responsive user experience.
+This project is no longer maintained, and but a simplified version is continuously deployed on [unihack.jasondev.me](https://unihack.jasondev.me). The code for this version is available in the `post-hackathon-deployment` branch.
+
+## Team Members
+- [Jason](https://github.com/jason301c)
+- [Oliver](https://github.com/oliverhuangcode)
+- [Brian](https://github.com/Brian-w-m)
+- [Zahir](https://github.com/zhasMU)
+- [John](https://github.com/JohnBanh)
+- [Adi](https://github.com/AdityaZDesai)
+
+## Project Overview
+Our project aims to provide users with a convenient and efficient way to find and try on clothing products. We leverage the power of Next.js for the frontend and Go for the backend, ensuring a seamless and responsive user experience.
+
 
 ## Project Structure
 
@@ -62,7 +74,3 @@ You can modify which container accesses which environment files in docker-compos
 You can access the containers by going to Docker Desktop and clicking on the container name. You can then access the terminal and run commands.
 
 This can be used for updating / installing packagse.
-
-## API Endpoints
-
-TODO
