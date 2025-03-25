@@ -2,6 +2,7 @@ import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ILLUSTRATIONS from "../../../constants/illustrations";
+import HackathonDisclaimer from "@/components/hackathon-disclaimer";
 
 const UserMenu = () => {
   return (
@@ -20,6 +21,8 @@ const UserMenu = () => {
 export default async function Home() {
   return (
     <div className="flex flex-col h-screen bg-prim-lightest ">
+      <HackathonDisclaimer />
+
       {/* Header */}
       <header className="flex mt-[5vh] justify-between items-center p-6 text-prim-darkest">
         <h1 className="text-3xl font-semibold">👋 Hi Guest!</h1>
@@ -33,7 +36,7 @@ export default async function Home() {
 
         {/* Action Buttons */}
         <Link href="/wardrobe" className="w-full">
-          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-blue-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
             <span>Your Wardrobe</span>
             <Image
               src={ILLUSTRATIONS.clotheshanger}
@@ -59,7 +62,7 @@ export default async function Home() {
         </Link>
 
         <Link href="/livelook" className="w-full">
-          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium bg-green-500 text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
+          <button className="w-full py-4 px-6 flex justify-between items-center text-lg font-medium text-white rounded-lg shadow-md bg-prim-darkest hover:bg-prim-neutral">
             <span>Live Look</span>
             <Image
               src={ILLUSTRATIONS.mirrorlady}

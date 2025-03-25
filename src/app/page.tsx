@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import PCDisclaimer from "@/components/pc-disclaimer";
+import HackathonDisclaimer from "@/components/hackathon-disclaimer";
 
 export default function Home() {
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
