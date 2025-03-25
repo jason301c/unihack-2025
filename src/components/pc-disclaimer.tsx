@@ -13,9 +13,7 @@ export default function PCDisclaimer({ onAccept }: PCDisclaimerProps) {
 
   // Effect to show disclaimer for PC users on first visit
   useEffect(() => {
-    const hasSeenDisclaimer = localStorage.getItem("disclaimerAccepted");
-    
-    if (!isMobile && !hasSeenDisclaimer) {
+    if (!isMobile) {
       setShowDisclaimer(true);
     } else {
       onAccept();
@@ -23,7 +21,6 @@ export default function PCDisclaimer({ onAccept }: PCDisclaimerProps) {
   }, [isMobile, onAccept]);
 
   const handleAcceptDisclaimer = () => {
-    localStorage.setItem("disclaimerAccepted", "true");
     setShowDisclaimer(false);
     onAccept();
   };
@@ -40,9 +37,10 @@ export default function PCDisclaimer({ onAccept }: PCDisclaimerProps) {
           For the best experience, please access Weave on your mobile device.
         </p>
         <p className="mb-6">
-          If you&apos;re using a computer, you can simulate a mobile view by using your browser&apos;s inspect element tool.
+          If you&apos;re using a computer, you can simulate a mobile view by
+          using your browser&apos;s inspect element tool.
         </p>
-        <button 
+        <button
           onClick={handleAcceptDisclaimer}
           className="w-full py-3 bg-prim-default text-white rounded-full hover:bg-prim-darkest transition-colors"
         >
