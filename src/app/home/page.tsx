@@ -2,43 +2,28 @@ import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ILLUSTRATIONS from "../../../constants/illustrations";
-import { auth0 } from "@/lib/auth0";
 
-const UserMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+const UserMenu = () => {
   return (
     <div className="relative">
-      {isLoggedIn ? (
-        <a
-          href="/auth/logout"
-          className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
-        >
-          Logout
-          <User className="w-8 h-8 cursor-pointer" />
-        </a>
-      ) : (
-        <a
-          href="/auth/login"
-          className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
-        >
-          Log in
-          <User className="w-8 h-8 cursor-pointer" />
-        </a>
-      )}
+      <a
+        href="/auth/logout"
+        className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
+      >
+        Logout
+        <User className="w-8 h-8 cursor-pointer" />
+      </a>
     </div>
   );
 };
 
 export default async function Home() {
-  const session = await auth0.getSession();
-  const name = session?.user.name?.split("@")[0].slice(0, 10) || "Guest";
-  const isLoggedIn = !!session;
-
   return (
     <div className="flex flex-col h-screen bg-prim-lightest ">
       {/* Header */}
       <header className="flex mt-[5vh] justify-between items-center p-6 text-prim-darkest">
-        <h1 className="text-3xl font-semibold">👋 Hi {name}!</h1>
-        <UserMenu isLoggedIn={isLoggedIn} />
+        <h1 className="text-3xl font-semibold">👋 Hi Guest!</h1>
+        <UserMenu />
       </header>
 
       {/* Actions Section */}

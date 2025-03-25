@@ -6,7 +6,6 @@ import SelectClothes from "@/components/livelook/select-clothes/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
 import Loading from "@/components/livelook/Loading";
-import { getAccessToken } from "@auth0/nextjs-auth0"
 
 // Define the type for a clothing item
 interface ClothingItem {
@@ -31,7 +30,9 @@ interface LiveLookContextType {
 }
 
 // Create the context with a default value
-const LiveLookContext = createContext<LiveLookContextType | undefined>(undefined);
+const LiveLookContext = createContext<LiveLookContextType | undefined>(
+  undefined
+);
 
 // Custom hook for accessing the context
 export const useLiveLook = () => {
@@ -50,44 +51,23 @@ export default function LiveLook() {
 
   // State that will be shared across components
   const [topClothing, setTopClothing] = useState<ClothingItem | null>(null);
-  const [bottomClothing, setBottomClothing] = useState<ClothingItem | null>(null);
+  const [bottomClothing, setBottomClothing] = useState<ClothingItem | null>(
+    null
+  );
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
-  // Generate function
+  // Simulated generate function
   const generateImage = async () => {
-    if (!uploadedPhoto || (!topClothing && !bottomClothing)) {
-      return;
-    }
-    
-    setIsGenerating(true);
-    goToStep(2);
-    try {
-      const token = await getAccessToken()
-      // TODO: Add actual API call here
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generation`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          model_image: uploadedPhoto,
-          garment_image: topClothing ? topClothing.imageUrl : "",
-          pants_image: bottomClothing ? bottomClothing.imageUrl : "",
-          category: "bottoms",
-        }),
-      });
-      const data = await response.json();
-      const outputUrl = data.full_outfit_generation?.output?.[0] || data.top_generation?.output?.[0] || null;
-      setGeneratedImage(outputUrl); // This will be replaced with actual generated image
-    } catch (error) {
-      console.error('Failed to generate image:', error);
-    } finally {
-      setIsGenerating(false);
-      goToStep(3);
-    }
+    return new Promise<void>((resolve) => {
+      setIsGenerating(true);
+      setTimeout(() => {
+        setGeneratedImage("/demo/gen-1.webp");
+        setIsGenerating(false);
+        resolve();
+      }, 2000); // Simulate a 2-second delay for image generation
+    });
   };
 
   // Handle navigation between steps
@@ -118,7 +98,7 @@ export default function LiveLook() {
     isGenerating,
     generateImage,
     generatedImage,
-    setGeneratedImage
+    setGeneratedImage,
   };
 
   // Render the appropriate component based on the current step
@@ -129,7 +109,7 @@ export default function LiveLook() {
       case 1:
         return <UploadPhoto onBack={goBack} onNext={() => goToStep(2)} />;
       case 2:
-        return <Loading onBack={goBack} onNext={() => goToStep(3)}/>;
+        return <Loading onBack={goBack} onNext={() => goToStep(3)} />;
       case 3:
         return <Generated onBack={goToHome} onFinish={goToHome} />;
       default:
