@@ -117,6 +117,10 @@ export default function LiveLook() {
     }
   };
 
+  const goLivelook = () => {
+    router.push("/livelook");
+  };
+
   // Context value
   const contextValue: LiveLookContextType = {
     topClothing,
@@ -142,7 +146,7 @@ export default function LiveLook() {
       case 2:
         return <Loading onBack={goBack} />;
       case 3:
-        return <Generated onBack={goBack} onFinish={saveLookToLookbook} />;
+        return <Generated onBack={goLivelook} onFinish={saveLookToLookbook} />;
       default:
         return <SelectClothes onBack={goBack} onNext={() => goToStep(1)} />;
     }
