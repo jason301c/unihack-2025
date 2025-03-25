@@ -1,10 +1,11 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SelectClothes from "@/components/livelook/select-clothes/SelectClothes";
 import UploadPhoto from "@/components/livelook/UploadPhoto";
 import Generated from "@/components/livelook/Generated";
 import Loading from "@/components/livelook/Loading";
+import { uploadUserPhoto, generateOutfit, saveLook } from "@/lib/mockApi";
 
 // Define the type for a clothing item
 interface ClothingItem {
@@ -26,7 +27,7 @@ interface LiveLookContextType {
   generateImage: () => Promise<void>;
   generatedImage: string | null;
   setGeneratedImage: (image: string | null) => void;
-  saveLookToLocalStorage: () => void;
+  saveLookToLookbook: () => void;
 }
 
 // Create the context with a default value
@@ -43,15 +44,6 @@ export const useLiveLook = () => {
   return context;
 };
 
-// Sample generated images to cycle through
-const sampleGeneratedImages = [
-  "/demo/gen-1.webp",
-  "/demo/gen-2.webp",
-  "/demo/gen-3.webp",
-  "/demo/gen-4.webp",
-  "/demo/gen-5.webp",
-];
-
 // The page itself
 export default function LiveLook() {
   const router = useRouter();
@@ -67,91 +59,48 @@ export default function LiveLook() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
-  // Load any saved state from localStorage on component mount
-  useEffect(() => {
-    try {
-      const savedTopClothing = localStorage.getItem("liveLookTopClothing");
-      const savedBottomClothing = localStorage.getItem(
-        "liveLookBottomClothing"
-      );
-      const savedPhoto = localStorage.getItem("uploadedUserPhoto");
-
-      if (savedTopClothing) setTopClothing(JSON.parse(savedTopClothing));
-      if (savedBottomClothing)
-        setBottomClothing(JSON.parse(savedBottomClothing));
-      if (savedPhoto) setUploadedPhoto(savedPhoto);
-    } catch (err) {
-      console.error("Error loading saved LiveLook state:", err);
-    }
-  }, []);
-
-  // Save clothing selections to localStorage when they change
-  useEffect(() => {
-    if (topClothing) {
-      localStorage.setItem("liveLookTopClothing", JSON.stringify(topClothing));
-    }
-    if (bottomClothing) {
-      localStorage.setItem(
-        "liveLookBottomClothing",
-        JSON.stringify(bottomClothing)
-      );
-    }
-  }, [topClothing, bottomClothing]);
-
-  // Client-side image generation function (uses demo images)
+  // Use API to generate image when requested
   const generateImage = async () => {
-    return new Promise<void>((resolve) => {
+    if (!uploadedPhoto) return;
+
+    // First store the user photo (not actually stored in our mock API)
+    try {
       setIsGenerating(true);
+      goToStep(2); // Navigate to loading screen
 
-      setTimeout(() => {
-        // Select a demo image based on clothing selection to make it more realistic
-        let selectedImage;
+      // Upload photo first (this is just a mock, no actual storage happens)
+      await uploadUserPhoto(uploadedPhoto);
 
-        // If no clothing selected, use last image as fallback
-        if (!topClothing && !bottomClothing) {
-          selectedImage =
-            sampleGeneratedImages[sampleGeneratedImages.length - 1];
-        } else {
-          // Select image based on which clothing items were chosen
-          const index = (topClothing ? 1 : 0) + (bottomClothing ? 2 : 0) - 1;
-          selectedImage = sampleGeneratedImages[index];
-        }
+      // Then generate the outfit
+      const result = await generateOutfit(topClothing, bottomClothing);
 
-        setGeneratedImage(selectedImage);
-        setIsGenerating(false);
-        resolve();
-      }, 2000); // Simulate a 2-second delay for image generation
-    });
+      // Set the generated image and go to results screen
+      setGeneratedImage(result.image);
+      setIsGenerating(false);
+      goToStep(3); // Go to generated image screen
+    } catch (error) {
+      console.error("Error generating image:", error);
+      setIsGenerating(false);
+      // Stay on the current step if there was an error
+    }
   };
 
-  // Save the generated look to localStorage for the LookBook
-  const saveLookToLocalStorage = () => {
+  // Save the generated look to lookbook via API
+  const saveLookToLookbook = async () => {
     if (!generatedImage) return;
 
     try {
-      // Get existing looks from localStorage
-      const savedLooksJSON = localStorage.getItem("lookbookLooks");
-      const savedLooks = savedLooksJSON ? JSON.parse(savedLooksJSON) : [];
-
-      // Create a new look
-      const newLook = {
-        id: Date.now().toString(),
-        name: `Look ${savedLooks.length + 1}`,
+      const result = await saveLook({
         image: generatedImage,
-        itemsUsed: [
-          topClothing?.imageUrl || "",
-          bottomClothing?.imageUrl || "",
-        ].filter(Boolean),
-      };
+        topClothingUrl: topClothing?.imageUrl,
+        bottomClothingUrl: bottomClothing?.imageUrl,
+      });
 
-      // Add to saved looks and store back
-      savedLooks.push(newLook);
-      localStorage.setItem("lookbookLooks", JSON.stringify(savedLooks));
-
-      // Provide feedback or navigate as needed
-      router.push("/lookbook");
+      if (result.success) {
+        router.push(result.redirectUrl);
+      }
     } catch (error) {
-      console.error("Error saving look to localStorage:", error);
+      console.error("Error saving look to lookbook:", error);
     }
   };
 
@@ -168,10 +117,6 @@ export default function LiveLook() {
     }
   };
 
-  const goToHome = () => {
-    router.push("/");
-  };
-
   // Context value
   const contextValue: LiveLookContextType = {
     topClothing,
@@ -184,7 +129,7 @@ export default function LiveLook() {
     generateImage,
     generatedImage,
     setGeneratedImage,
-    saveLookToLocalStorage,
+    saveLookToLookbook,
   };
 
   // Render the appropriate component based on the current step
@@ -195,11 +140,9 @@ export default function LiveLook() {
       case 1:
         return <UploadPhoto onBack={goBack} onNext={() => goToStep(2)} />;
       case 2:
-        return <Loading onBack={goBack} onNext={() => goToStep(3)} />;
+        return <Loading onBack={goBack} />;
       case 3:
-        return (
-          <Generated onBack={goToHome} onFinish={saveLookToLocalStorage} />
-        );
+        return <Generated onBack={goBack} onFinish={saveLookToLookbook} />;
       default:
         return <SelectClothes onBack={goBack} onNext={() => goToStep(1)} />;
     }

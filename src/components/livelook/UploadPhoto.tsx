@@ -9,10 +9,12 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { useLiveLook } from "@/app/livelook/page";
 import Image from "next/image";
+
 interface UploadPhotoProps {
   onBack: () => void;
   onNext: () => void;
 }
+
 export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
   const {
     topClothing,
@@ -22,6 +24,7 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
     generateImage,
     isGenerating,
   } = useLiveLook();
+
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,20 +39,12 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Convert image to base64 data URL instead of uploading to a server
+    // Convert image to base64 data URL
     const reader = new FileReader();
     reader.onloadend = () => {
-      // Store the base64 string in a variable to be used in the app
+      // Store the base64 string in the context state
       const base64String = reader.result as string;
       setUploadedPhoto(base64String);
-
-      // Optionally store in localStorage if needed for persistence
-      try {
-        localStorage.setItem("uploadedUserPhoto", base64String);
-      } catch (error) {
-        console.error("Error storing image in localStorage:", error);
-        // Handle the case where localStorage might be full
-      }
     };
 
     reader.readAsDataURL(file);
@@ -62,7 +57,11 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
 
   const handleRemoveImage = () => {
     setUploadedPhoto(null);
-    localStorage.removeItem("uploadedUserPhoto");
+  };
+
+  // Called when the user clicks Generate
+  const handleGenerate = async () => {
+    await generateImage();
   };
 
   return (
@@ -101,7 +100,7 @@ export default function UploadPhoto({ onBack, onNext }: UploadPhotoProps) {
             </button>
           </div>
           <button
-            onClick={generateImage}
+            onClick={handleGenerate}
             disabled={isGenerating}
             className="px-8 py-4 bg-[#3E3A66] text-white rounded-md hover:bg-[#2E2A56] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >

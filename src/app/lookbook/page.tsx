@@ -70,6 +70,7 @@ export default function LookBookPage() {
   }, []);
 
   // Add a new look to the collection (can be used when generating a new look)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const addLook = (newLook: Look) => {
     const updatedLooks = [...looks, newLook];
     setLooks(updatedLooks);

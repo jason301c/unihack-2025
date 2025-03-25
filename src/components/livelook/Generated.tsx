@@ -10,16 +10,15 @@ interface GeneratedProps {
 }
 
 export default function Generated({ onBack, onFinish }: GeneratedProps) {
-  const { generatedImage, isGenerating, saveLookToLocalStorage } =
-    useLiveLook();
+  const { generatedImage, isGenerating, saveLookToLookbook } = useLiveLook();
 
   if (isGenerating) {
     return <Loading />;
   }
 
   const handleSaveToLookbook = () => {
-    // Use the saveLookToLocalStorage function from context
-    saveLookToLocalStorage();
+    // Use the saveLookToLookbook function from context
+    saveLookToLookbook();
     if (onFinish) onFinish();
   };
 
