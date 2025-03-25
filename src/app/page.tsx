@@ -17,9 +17,7 @@ export default function Home() {
   };
 
   if (!disclaimerAccepted) {
-    return (
-      <PCDisclaimer onAccept={() => setDisclaimerAccepted(true)} />
-    );
+    return <PCDisclaimer onAccept={() => setDisclaimerAccepted(true)} />;
   }
 
   return (
@@ -53,7 +51,8 @@ export default function Home() {
               Get Started
             </h2>
             <p className="text-base leading-5 text-prim-neutral max-w-[356px]">
-              See what you look like wearing the clothes you want before you buy them.
+              See what you look like wearing the clothes you want before you buy
+              them.
             </p>
           </header>
 
@@ -64,15 +63,21 @@ export default function Home() {
             aria-label="Authentication options"
           >
             {/* Primary action: Log in */}
-            <a href="/auth/login?returnTo=/onboarding">
-              <div className={`${baseStyles} ${variantStyles.primary}`} aria-label="Login with email">
+            <a href="/onboarding">
+              <div
+                className={`${baseStyles} ${variantStyles.primary}`}
+                aria-label="Login with email"
+              >
                 Log in
               </div>
             </a>
 
             {/* Secondary action: Continue as guest */}
             <Link href="/onboarding">
-              <div className={`${baseStyles} ${variantStyles.secondary}`} aria-label="Continue as guest">
+              <div
+                className={`${baseStyles} ${variantStyles.secondary}`}
+                aria-label="Continue as guest"
+              >
                 Continue as guest
               </div>
             </Link>

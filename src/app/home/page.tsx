@@ -6,13 +6,13 @@ import ILLUSTRATIONS from "../../../constants/illustrations";
 const UserMenu = () => {
   return (
     <div className="relative">
-      <a
-        href="/auth/logout"
+      <Link
+        href="/"
         className="flex items-center gap-2 text-sm text-prim-darkest hover:text-prim-neutral"
       >
         Logout
         <User className="w-8 h-8 cursor-pointer" />
-      </a>
+      </Link>
     </div>
   );
 };

@@ -2,7 +2,6 @@
 import React, { useState, useRef } from "react";
 import UploadBox from "./upload/UploadBox";
 import { UploadFileIcon, CameraIcon } from "./upload/UploadIcons";
-import COLORS from "../../../../constants/colors";
 
 const UploadPhotoStep: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -43,8 +42,7 @@ const UploadPhotoStep: React.FC = () => {
           <img
             src={selectedImage}
             alt="User selfie"
-            className="w-64 h-64 object-cover rounded-lg border-2"
-            style={{ borderColor: COLORS.secondary }}
+            className="w-64 h-64 object-cover rounded-lg border-2 border-prim-darkest"
           />
           <button
             onClick={() => setSelectedImage(null)}

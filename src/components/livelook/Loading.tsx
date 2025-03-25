@@ -3,15 +3,13 @@
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import ILLUSTRATIONS from "../../../constants/illustrations";
-import { useLiveLook } from "@/app/livelook/page";
-import { useEffect } from "react";
 
 interface LoadingProps {
   onBack?: () => void;
   onNext?: () => void;
 }
 
-export default function Loading({ onBack, onNext }: LoadingProps) {
+export default function Loading({ onBack }: LoadingProps) {
 
   return (
     <div

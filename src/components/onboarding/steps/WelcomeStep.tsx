@@ -1,31 +1,25 @@
 import ILLUSTRATIONS from "../../../../constants/illustrations";
 import Image from "next/image";
 import Link from "next/link";
-import { auth0 } from "@/lib/auth0";
 
 export default async function Home() {
-  const session = await auth0.getSession();
-  const name = session?.user.name?.split('@')[0].slice(0, 10) || "Guest";
-
   return (
     <div className="flex flex-col h-screen w-screen overflow-y-auto">
       {/* Text Section remains unchanged */}
       <div className="flex flex-col text-left w-full px-6 mt-8 pt-20">
-        { name && (
-          <p className="text-3xl font-regular text-prim-darkest mb-8">
-            Hi, {name}.
-          </p>
-        )}
-      <h1 className="text-5xl font-semibold mb-6 text-prim-darkest">
-        Welcome to{" "}
-        <span className="text-prim-dark">
-        <br /> Weave.
-        </span>
-      </h1>
+        <p className="text-3xl font-regular text-prim-darkest mb-8">
+          Hi, Guest.
+        </p>
+        <h1 className="text-5xl font-semibold mb-6 text-prim-darkest">
+          Welcome to{" "}
+          <span className="text-prim-dark">
+            <br /> Weave.
+          </span>
+        </h1>
 
-      <p className="text-2xl font-regular text-prim-darkest">
-        The app designed <br /> to make fashion <br /> simple.
-      </p>
+        <p className="text-2xl font-regular text-prim-darkest">
+          The app designed <br /> to make fashion <br /> simple.
+        </p>
       </div>
 
       {/* Spacer to push content to bottom */}

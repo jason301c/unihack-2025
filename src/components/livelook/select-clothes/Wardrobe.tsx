@@ -19,44 +19,97 @@ export type ClothingItem = {
 interface WardrobeProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  onSelectItem: (item: { id: string; imageUrl: string; type: "tops" | "bottoms" }) => void;
+  onSelectItem: (item: {
+    id: string;
+    imageUrl: string;
+    type: "tops" | "bottoms";
+  }) => void;
   selectionType: "tops" | "bottoms"; // Force selection type based on what's missing
 }
 
-export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selectionType }: WardrobeProps) {
+// Simulated data fetch
+function fetchWardrobeItems(): ClothingItem[] {
+  const data = [
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/bottom/1742044882647489285-pt.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/bottom/1742045178732056086-anything-dress-pant-slim-back-flat-lay-black_1080x.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/bottom/1742045268879593656-dickiesduckpantforestgreenstonewashed_1024x1024.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/bottom/1742048090237595802-den.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/bottom/1742048291073425535-car.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742048809100869663-jack.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742076898357935531-whithst.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742077201303421813-di.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742078473582765459-images.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742083753196660720-d.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742106197052165651-tsh.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742205384682294513-IMG_9971.jpeg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742205389293289028-IMG_9972.jpeg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/1742287961682766643-testshirt.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/il_570xN.628322829.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/jacketsss.jpg",
+    },
+    {
+      url: "https://dest-img-unihack.s3.ap-southeast-2.amazonaws.com/top/muscle-removebg-preview.png",
+    },
+  ];
+  return data.map((img: { url: string }, index: number) => ({
+    id: index.toString(),
+    name: `Item ${index + 1}`,
+    imageUrl: img.url,
+  }));
+}
+
+export default function Wardrobe({
+  isOpen,
+  onOpenChange,
+  onSelectItem,
+  selectionType,
+}: WardrobeProps) {
   const [items, setItems] = useState<ClothingItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch wardrobe items on component mount
   useEffect(() => {
-    const fetchImages = async () => {
-      setLoading(true);
-      setError(null);
-
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-
-      try {
-        const res = await fetch(`${apiUrl}/api/images`);
-        if (!res.ok) throw new Error("Failed to fetch images");
-
-        const data = await res.json();
-        setItems(
-          data.map((img: { url: string }, index: number) => ({
-            id: index.toString(),
-            name: `Item ${index + 1}`,
-            imageUrl: img.url,
-          })),
-        );
-      } catch (err) {
-        console.error("Error fetching images:", err);
-        setError("Could not load wardrobe items. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchImages();
+    setLoading(true);
+    try {
+      const wardrobeItems = fetchWardrobeItems();
+      setItems(wardrobeItems);
+    } catch (err) {
+      console.error("Error loading wardrobe items:", err);
+      setError("Could not load wardrobe items. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const handleItemClick = (item: ClothingItem) => {
@@ -81,7 +134,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
               <SheetTitle className="text-xl font-semibold text-prim-light">
                 Select {selectionType === "tops" ? "Top" : "Bottom"}
               </SheetTitle>
-              <button 
+              <button
                 onClick={() => onOpenChange(false)}
                 className="transform transition-transform duration-200 hover:scale-110"
               >
@@ -95,12 +148,16 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
             {/* Scrollable Grid Container */}
             <div className="flex-1 overflow-y-auto pb-24">
               <div className="grid grid-cols-3 gap-6 justify-items-center mt-6 py-4 w-full px-4">
-                {loading && <p className="text-center text-prim-light">Loading wardrobe...</p>}
+                {loading && (
+                  <p className="text-center text-prim-light">
+                    Loading wardrobe...
+                  </p>
+                )}
                 {error && <p className="text-red-500 text-center">{error}</p>}
                 {!loading &&
                   items.map((item) => (
-                    <div 
-                      key={item.id} 
+                    <div
+                      key={item.id}
                       className="relative w-24 h-24 overflow-hidden cursor-pointer transition-transform hover:scale-105"
                       onClick={() => handleItemClick(item)}
                     >
@@ -122,18 +179,18 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
             background-color: transparent !important;
             transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
           }
-          
+
           [data-state="closed"] {
             animation: slideDown 200ms cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
             pointer-events: none;
           }
-          
+
           [data-state="open"] {
             animation: slideUp 200ms cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
           }
-          
+
           @keyframes slideUp {
             from {
               transform: translateY(100%);
@@ -144,7 +201,7 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
               opacity: 1;
             }
           }
-          
+
           @keyframes slideDown {
             from {
               transform: translateY(0);
@@ -155,13 +212,13 @@ export default function Wardrobe({ isOpen, onOpenChange, onSelectItem, selection
               opacity: 0;
             }
           }
-          
+
           /* Ensure content fades with drawer */
           [data-state="closed"] * {
             opacity: 0;
             transition: opacity 150ms ease-out;
           }
-          
+
           [data-state="open"] * {
             opacity: 1;
             transition: opacity 200ms ease-in;

@@ -1,5 +1,4 @@
 "use client";
-
 import { ArrowLeft } from "lucide-react";
 import { useLiveLook } from "@/app/livelook/page";
 import Loading from "@/components/livelook/Loading";
@@ -11,11 +10,18 @@ interface GeneratedProps {
 }
 
 export default function Generated({ onBack, onFinish }: GeneratedProps) {
-  const { generatedImage, isGenerating } = useLiveLook();
+  const { generatedImage, isGenerating, saveLookToLocalStorage } =
+    useLiveLook();
 
   if (isGenerating) {
     return <Loading />;
   }
+
+  const handleSaveToLookbook = () => {
+    // Use the saveLookToLocalStorage function from context
+    saveLookToLocalStorage();
+    if (onFinish) onFinish();
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -47,7 +53,7 @@ export default function Generated({ onBack, onFinish }: GeneratedProps) {
       {/* Actions */}
       <div className="flex flex-col p-4 bg-white">
         <button
-          onClick={onFinish}
+          onClick={handleSaveToLookbook}
           className="bg-prim-darkest text-white py-3 rounded-xl mb-2"
         >
           Save to Lookbook

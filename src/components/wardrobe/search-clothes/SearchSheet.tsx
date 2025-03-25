@@ -16,16 +16,43 @@ interface SearchSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-async function fetchRecommended(): Promise<QueryResult[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-
-  if (!apiUrl) {
-    throw new Error("API URL is not defined");
-  }
-
-  const response = await fetch(apiUrl + "/fetch");
-  const result = (await response.json()) as QueryResult[];
-  return result;
+function fetchRecommended(): QueryResult[] {
+  return [
+    {
+      query: "zara",
+      images: [
+        {
+          link: "https://static.zara.net/assets/public/cbee/bee6/730540c78ef5/fe5fe8ae1f09/1679055787018/1679055787018.jpg?ts=1702299824105",
+          brand: "Zara",
+        },
+        {
+          link: "https://static.zara.net/assets/public/a893/852b/957e4e3ca322/7633a1e00a2b/03152710802-e1/03152710802-e1.jpg?ts=1723801291734",
+          brand: "Zara",
+        },
+        {
+          link: "https://static.zara.net/assets/public/7e0a/5372/418d4bdc9430/95c444a0272e/20120840999-e1/20120840999-e1.jpg?ts=1735562701563",
+          brand: "Zara",
+        },
+      ],
+    },
+    {
+      query: "jacket",
+      images: [
+        {
+          link: "https://image.uniqlo.com/UQ/ST3/au/imagesgoods/476316/item/augoods_69_476316_3x4.jpg?width=494",
+          brand: "Uniqlo",
+        },
+        {
+          link: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/464998/item/goods_69_464998_3x4.jpg?width=494",
+          brand: "Uniqlo",
+        },
+        {
+          link: "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/462770/sub/goods_462770_sub14_3x4.jpg?width=494",
+          brand: "Uniqlo",
+        },
+      ],
+    },
+  ];
 }
 
 export default function SearchSheet({
@@ -36,11 +63,8 @@ export default function SearchSheet({
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const items = await fetchRecommended();
-      setRecommendedItems(items);
-    }
-    fetchData();
+    const items = fetchRecommended();
+    setRecommendedItems(items);
   }, [refresh]);
 
   return (

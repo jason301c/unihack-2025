@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import EmptyWardrobe from "@/components/wardrobe/EmptyWardrobe";
 import WardrobeGrid from "@/components/wardrobe/WardrobeGrid";
@@ -18,7 +17,6 @@ type WardrobeClientProps = {
 
 export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
   const router = useRouter();
-
   const [items, setItems] = useState<ClothingItem[]>(initialItems);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +25,27 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
   // Refs for hidden file inputs
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Load items from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedItems = localStorage.getItem("wardrobeItems");
+      if (savedItems) {
+        setItems(JSON.parse(savedItems));
+      }
+    } catch (err) {
+      console.error("Error loading wardrobe items from localStorage:", err);
+    }
+  }, []);
+
+  // Save items to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem("wardrobeItems", JSON.stringify(items));
+    } catch (err) {
+      console.error("Error saving wardrobe items to localStorage:", err);
+    }
+  }, [items]);
 
   // Add item logic (triggered when uploading a new image)
   const handleAddItem = () => {
@@ -44,37 +63,36 @@ export function WardrobeClient({ initialItems = [] }: WardrobeClientProps) {
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Create FormData to send the file
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("bucket", "src-img-unihack")
-
       try {
         setLoading(true);
         setError(null);
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+        // Use FileReader to convert file to data URL
+        const reader = new FileReader();
 
-        // Send file to backend for upload to S3
-        const res = await fetch(`${apiUrl}/api/upload`, {
-          method: "POST",
-          body: formData,
-        });
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
 
-        if (!res.ok) throw new Error("Failed to upload image");
+          // Create a new clothing item with the data URL
+          const newItem: ClothingItem = {
+            id: Math.random().toString(36).substring(2),
+            name: file.name.replace(/\.[^/.]+$/, ""), // Remove file extension from name
+            imageUrl: base64String,
+          };
 
-        // Assuming the server responds with the URL of the uploaded image
-        const data = await res.json();
-        const newItem: ClothingItem = {
-          id: Math.random().toString(36).substring(2),
-          name: file.name,
-          imageUrl: data.url, // Assuming the response contains the URL
+          setItems((prev) => [...prev, newItem]);
+          setLoading(false);
         };
-        setItems((prev) => [...prev, newItem]);
+
+        reader.onerror = () => {
+          setError("Failed to read file. Please try again.");
+          setLoading(false);
+        };
+
+        reader.readAsDataURL(file);
       } catch (err) {
-        console.error("Error uploading file:", err);
-        setError("Failed to upload image. Please try again.");
-      } finally {
+        console.error("Error processing file:", err);
+        setError("Failed to process image. Please try again.");
         setLoading(false);
       }
     }
